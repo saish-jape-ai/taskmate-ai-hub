@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
@@ -6,7 +5,7 @@ import { users } from '@/data/mockData';
 import AppLayout from '@/components/AppLayout';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Mail, Phone, Calendar, MessageSquare, FileText, CheckCircle2, Clock, AlertCircle, Briefcase, User, Star, Users, FileCheck } from 'lucide-react';
+import { ArrowLeft, Mail, Phone, Calendar, MessageSquare, FileText, CheckCircle2, Clock, AlertCircle, Briefcase, User, Star, Users, FileCheck, Sparkle } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -18,14 +17,12 @@ const MemberProfile = () => {
   const [member, setMember] = useState<any>(null);
   
   useEffect(() => {
-    // Find member data
     const foundMember = users.find(user => user.id === id);
     if (foundMember) {
       setMember(foundMember);
     }
   }, [id]);
   
-  // Sample performance data
   const performanceData = [
     { name: 'Jan', score: 82 },
     { name: 'Feb', score: 85 },
@@ -64,9 +61,7 @@ const MemberProfile = () => {
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Profile Card */}
           <Card className="p-6 lg:col-span-1 relative overflow-hidden">
-            {/* Status indicator */}
             <div className="absolute top-4 right-4">
               <Badge className="bg-green-100 hover:bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:hover:bg-green-900/40 dark:border-green-800/30">
                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5"></div>
@@ -141,7 +136,6 @@ const MemberProfile = () => {
             </div>
           </Card>
           
-          {/* Content Section */}
           <div className="lg:col-span-2">
             <Tabs defaultValue="performance" className="w-full">
               <TabsList className="grid grid-cols-3 mb-6">
@@ -348,7 +342,7 @@ const MemberProfile = () => {
                             {i === 1 && (
                               <div className="bg-taskmate-purple/5 border border-taskmate-purple/20 rounded-md p-2 mt-2">
                                 <div className="flex items-start gap-2">
-                                  <Sparkles className="h-4 w-4 text-taskmate-purple mt-0.5" />
+                                  <Sparkle className="h-4 w-4 text-taskmate-purple mt-0.5" />
                                   <div className="text-sm">
                                     <span className="font-medium">AI Analysis:</span>
                                     <p className="text-muted-foreground text-xs">High quality report with clear outcomes and next steps. Shows excellent progress on assigned tasks.</p>
