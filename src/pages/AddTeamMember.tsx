@@ -38,7 +38,7 @@ const AddTeamMember = () => {
               required
             />
           </div>
-          <button type="submit" className="w-full bg-bloom-purple text-white font-semibold rounded py-2 hover:bg-bloom-purple/90">
+          <button type="submit" className="w-full bg-taskmate-purple text-white font-semibold rounded py-2 hover:bg-taskmate-purple/90">
             Add Member
           </button>
         </form>

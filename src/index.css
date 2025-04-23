@@ -94,7 +94,7 @@
     @apply bg-background text-foreground;
   }
 
-  /* Custom styles for BloomTeam */
+  /* Custom styles for TaskMate */
   .bloom-card {
     @apply bg-white dark:bg-card rounded-xl shadow-md border border-border p-6;
   }
@@ -108,11 +108,11 @@
   }
 
   .bloom-sidebar-link {
-    @apply flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-bloom-purple/10 hover:text-bloom-purple dark:hover:bg-bloom-purple/20;
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-taskmate-purple/10 hover:text-taskmate-purple dark:hover:bg-taskmate-purple/20;
   }
 
   .bloom-sidebar-link.active {
-    @apply bg-bloom-purple/10 text-bloom-purple font-medium dark:bg-bloom-purple/20;
+    @apply bg-taskmate-purple/10 text-taskmate-purple font-medium dark:bg-taskmate-purple/20;
   }
 
   .bloom-chat-bubble {
@@ -120,7 +120,7 @@
   }
 
   .bloom-chat-bubble-sender {
-    @apply bloom-chat-bubble bg-bloom-purple text-white self-end;
+    @apply bloom-chat-bubble bg-taskmate-purple text-white self-end;
   }
 
   .bloom-chat-bubble-receiver {
@@ -136,14 +136,14 @@
   }
 
   .bloom-status-pending {
-    @apply bloom-status-badge bg-bloom-blue text-blue-700 dark:bg-blue-900/30 dark:text-blue-300;
+    @apply bloom-status-badge bg-taskmate-blue text-blue-700 dark:bg-blue-900/30 dark:text-blue-300;
   }
 
   .bloom-status-completed {
-    @apply bloom-status-badge bg-bloom-green text-green-700 dark:bg-green-900/30 dark:text-green-300;
+    @apply bloom-status-badge bg-taskmate-green text-green-700 dark:bg-green-900/30 dark:text-green-300;
   }
 
   .bloom-status-overdue {
-    @apply bloom-status-badge bg-bloom-orange text-orange-700 dark:bg-orange-900/30 dark:text-orange-300;
+    @apply bloom-status-badge bg-taskmate-orange text-orange-700 dark:bg-orange-900/30 dark:text-orange-300;
   }
 }
