@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Task } from '@/types';
@@ -88,6 +87,9 @@ const TaskItem = ({ task, compact = false }: TaskItemProps) => {
           <h3 className="font-medium text-sm truncate">{task.title}</h3>
           {getStatusIndicator()}
         </div>
+        {currentUser?.role === 'super_admin' && assignee && (
+          <div className="text-xs mt-1 text-bloom-purple font-semibold">Assigned to: {assignee.name}</div>
+        )}
         <div className="mt-2 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Calendar className="h-4 w-4 text-gray-400" />
@@ -117,7 +119,10 @@ const TaskItem = ({ task, compact = false }: TaskItemProps) => {
                   </Badge>
                 )}
               </div>
-              
+              {currentUser?.role === 'super_admin' && assignee && (
+                <div className="text-xs mt-2 text-bloom-purple font-semibold">Assigned to: {assignee.name}</div>
+              )}
+
               <div className="mt-2 flex items-center text-xs text-muted-foreground">
                 <Calendar className="h-3 w-3 mr-1" />
                 Due {formattedDueDate}

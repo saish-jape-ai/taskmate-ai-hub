@@ -12,13 +12,13 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-bloom-blue/30 to-bloom-purple/10">
-      <div className="container mx-auto px-4 py-16 md:py-24 space-y-20">
+    <div className="min-h-screen bg-gradient-to-br from-bloom-blue/30 to-bloom-purple/10 flex flex-col">
+      <div className="container mx-auto px-4 py-16 md:py-24 space-y-20 flex-1">
         {/* Hero */}
         <header className="flex flex-col items-center md:flex-row md:justify-between mb-8">
           <div className="flex items-center space-x-2">
             <AreaChart className="h-8 w-8 text-bloom-purple" />
-            <span className="text-2xl font-bold">BloomTeam</span>
+            <span className="text-2xl font-bold">TaskMate</span>
           </div>
           <Button onClick={() => navigate('/login')} variant="outline" className="mt-6 md:mt-0">
             Sign In
@@ -34,12 +34,13 @@ const Index = () => {
               Optimize productivity and performance using intelligent task management, AI-driven analytics, notifications, and a robust chat system.
             </p>
             <div className="space-y-5">
-              <h2 className="text-2xl font-semibold mb-3">How to Use BloomTeam</h2>
+              <h2 className="text-2xl font-semibold mb-3">How to Use TaskMate</h2>
               <ol className="list-decimal pl-7 space-y-2 text-base">
                 <li>Sign in as Super Admin, Team Leader, or Employee.</li>
                 <li>Super Admins access all teams, analytics, and system settings.</li>
                 <li>Team Leaders create tasks with AI help, assign members, and monitor team performance.</li>
                 <li>Employees view tasks, chat, receive notifications, and interact with their AI assistant.</li>
+                <li>Submit your EOD (End Of Day) update to the manager.</li>
                 <li>All users can track progress, chat, and receive AI-driven feedback and suggestions.</li>
               </ol>
             </div>
@@ -53,7 +54,8 @@ const Index = () => {
                 <li>Secure, role-based authentication</li>
                 <li>Personal AI assistant/chatbot for every employee</li>
                 <li>Group and private chat with tagging</li>
-                <li>Settings page for user preferences</li>
+                <li>End Of Day (EOD) reports direct to your manager</li>
+                <li>Settings page for user preferences with dark mode toggle</li>
                 <li>Future: Voice & video calling features</li>
               </ul>
             </div>
@@ -62,7 +64,7 @@ const Index = () => {
           <section className="md:w-1/3 mt-12 md:mt-0 flex flex-col gap-8">
             <div className="rounded-xl overflow-hidden shadow-lg bg-white dark:bg-gray-900 p-5">
               <img 
-                src="https://placehold.co/600x400/f5f7ff/9b87f5?text=BloomTeam+Dashboard&font=montserrat" 
+                src="https://placehold.co/600x400/f5f7ff/9b87f5?text=TaskMate+Dashboard&font=montserrat" 
                 alt="Dashboard preview" 
                 className="rounded-lg mb-3"
               />
@@ -75,7 +77,7 @@ const Index = () => {
                 <Info className="h-6 w-6" /> Project Overview
               </div>
               <div className="text-sm text-muted-foreground">
-                BloomTeam is a unified platform for team management, analytics, and communication powered by AI.
+                TaskMate is a unified platform for team management, analytics, and communication powered by AI.
                 It lets you <b>organize teams</b>, <b>assign & track tasks</b>, <b>enjoy intelligent suggestions</b>, 
                 and <b>compare performance</b>—all with a beautiful, role-aware interface. 
               </div>
@@ -91,7 +93,7 @@ const Index = () => {
               <ul className="list-disc ml-7 text-sm">
                 <li><b>Super Admin:</b> Full visibility for all teams, analytics, and settings.</li>
                 <li><b>Team Leader:</b> Create/assign tasks, manage members, track team stats, chat.</li>
-                <li><b>Employee:</b> Work on assigned tasks, get feedback, notifications, and chat.</li>
+                <li><b>Employee:</b> Work on assigned tasks, get feedback, notifications, and send EOD updates.</li>
               </ul>
             </div>
           </section>
@@ -100,10 +102,13 @@ const Index = () => {
           <h2 className="text-3xl font-bold mb-6">Project Workflow & Future Plans</h2>
           <div className="space-y-5 text-base text-muted-foreground">
             <p>
-              <b>AI Integration:</b> From intelligent task suggestions to evaluating performance, AI drives smart productivity at BloomTeam.
+              <b>AI Integration:</b> From intelligent task suggestions to evaluating performance, AI drives smart productivity at TaskMate.
             </p>
             <p>
               <b>Notifications:</b> Never miss a deadline or a message—get rapid updates for key events.
+            </p>
+            <p>
+              <b>EOD Reports:</b> Employees send daily EOD updates, visible to managers and leaders.
             </p>
             <p>
               <b>Performance Tracking:</b> Track your progress over time, compare with teammates, and visualize team growth.
@@ -116,10 +121,11 @@ const Index = () => {
             </p>
           </div>
         </section>
-        <footer className="text-center text-xs text-muted-foreground py-6 mt-12">
-          © 2025 BloomTeam. For modern teams.
-        </footer>
       </div>
+      {/* New Footer Bar */}
+      <footer className="w-full bg-bloom-purple/90 text-white py-5 text-center shadow-xl mt-auto">
+        © 2025 TaskMate. For modern teams.
+      </footer>
     </div>
   );
 };

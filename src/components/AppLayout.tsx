@@ -48,6 +48,7 @@ const AppLayout = ({ children, title }: AppLayoutProps) => {
               <div className="hidden md:block">
                 <div className="text-sm font-medium">{currentUser.name}</div>
                 <div className="text-xs text-muted-foreground capitalize">{currentUser.role.replace('_', ' ')}</div>
+                {/* Branding text removed to avoid repeating "TaskMate" too much */}
               </div>
             </div>
           </header>
