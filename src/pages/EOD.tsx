@@ -3,10 +3,11 @@ import AppLayout from "@/components/AppLayout";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "@/hooks/use-toast";
-import { FileText, Sparkles } from "lucide-react";
+import { FileText, Sparkles, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 const EOD = () => {
   const { currentUser } = useAuth();
@@ -22,7 +23,11 @@ const EOD = () => {
     setTimeout(() => {
       setLoading(false);
       setEod("");
-      toast({ title: "EOD Submitted", description: "Your End Of Day update has been sent to your manager." });
+      toast({ 
+        title: "EOD Submitted", 
+        description: "Your End Of Day update has been sent to your manager." 
+      });
+      setTodayActivities("");
     }, 800);
   };
 
@@ -64,13 +69,20 @@ ${todayActivities.split('\n').map(activity => `- ${activity}`).join('\n')}
     <AppLayout title="Submit EOD">
       <div className="max-w-2xl mx-auto">
         <Card className="p-8">
-          <div className="flex items-center gap-3 font-bold text-2xl mb-6">
-            <FileText className="h-7 w-7 text-taskmate-purple" />
-            End Of Day (EOD) Update
+          <div className="flex items-center justify-center mb-8">
+            <div className="text-center">
+              <div className="h-16 w-16 rounded-full bg-taskmate-purple/20 flex items-center justify-center mx-auto">
+                <FileText className="h-8 w-8 text-taskmate-purple" />
+              </div>
+              <h2 className="text-2xl font-bold mt-4">End Of Day (EOD) Update</h2>
+              <p className="text-muted-foreground mt-1">Share your daily accomplishments with your team</p>
+            </div>
           </div>
           
+          <Separator className="my-6" />
+          
           <div className="mb-6">
-            <h3 className="text-lg font-medium mb-2">Generate EOD with AI</h3>
+            <h3 className="text-lg font-semibold mb-2">Generate EOD with AI</h3>
             <div className="space-y-4">
               <Textarea
                 placeholder="List your activities for today (e.g., 'Worked on dashboard UI', 'Fixed login bug', etc.)"
@@ -93,7 +105,7 @@ ${todayActivities.split('\n').map(activity => `- ${activity}`).join('\n')}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block font-medium mb-2">Your EOD Report</label>
+              <label className="block font-semibold mb-2">Your EOD Report</label>
               <Textarea
                 value={eod}
                 onChange={e => setEod(e.target.value)}
@@ -108,7 +120,8 @@ ${todayActivities.split('\n').map(activity => `- ${activity}`).join('\n')}
               className="w-full bg-taskmate-purple hover:bg-taskmate-purple/90"
               disabled={loading || !eod.trim()}
             >
-              {loading ? "Submitting..." : "Send EOD to Manager"}
+              <Send className="mr-2 h-4 w-4" />
+              {loading ? "Sending..." : "Send EOD to Manager"}
             </Button>
           </form>
         </Card>

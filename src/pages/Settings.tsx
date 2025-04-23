@@ -5,9 +5,16 @@ import { Switch } from "@/components/ui/switch";
 import { useTheme } from "next-themes";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useEffect, useState } from "react";
 
 const Settings = () => {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Wait for component to mount to access theme
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <AppLayout title="Settings">
@@ -49,14 +56,18 @@ const Settings = () => {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Sun className="h-5 w-5" />
+                {mounted && theme === "dark" ? (
+                  <Moon className="h-5 w-5" />
+                ) : (
+                  <Sun className="h-5 w-5" />
+                )}
                 <div>
                   <label className="font-medium">Dark Mode</label>
                   <p className="text-sm text-muted-foreground">Toggle between light and dark themes</p>
                 </div>
               </div>
               <Switch 
-                checked={theme === "dark"}
+                checked={mounted && theme === "dark"}
                 onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
               />
             </div>
@@ -92,6 +103,14 @@ const Settings = () => {
               </div>
               <Switch defaultChecked />
             </div>
+            <Separator />
+            <div className="flex items-center justify-between">
+              <div>
+                <label className="font-medium">EOD Reminders</label>
+                <p className="text-sm text-muted-foreground">Get daily reminders to submit your EOD report</p>
+              </div>
+              <Switch defaultChecked />
+            </div>
           </div>
         </Card>
 
@@ -106,7 +125,7 @@ const Settings = () => {
                 <label className="font-medium">Language</label>
                 <p className="text-sm text-muted-foreground">Choose your preferred language</p>
               </div>
-              <select className="border rounded px-2 py-1">
+              <select className="border rounded px-2 py-1 bg-background">
                 <option>English</option>
                 <option>Spanish</option>
                 <option>French</option>
@@ -118,7 +137,7 @@ const Settings = () => {
                 <label className="font-medium">Time Zone</label>
                 <p className="text-sm text-muted-foreground">Set your local time zone</p>
               </div>
-              <select className="border rounded px-2 py-1">
+              <select className="border rounded px-2 py-1 bg-background">
                 <option>UTC</option>
                 <option>EST</option>
                 <option>PST</option>

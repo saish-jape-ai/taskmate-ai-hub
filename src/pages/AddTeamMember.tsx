@@ -1,47 +1,75 @@
 
 import AppLayout from "@/components/AppLayout";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { ArrowLeft, UserPlus } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 const AddTeamMember = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const navigate = useNavigate();
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     // Here you would integrate member creation logic (API)
-    alert(`Added member: ${name} (${email})`);
-    setName("");
-    setEmail("");
+    toast({
+      title: "Team member added", 
+      description: `${name} has been added to your team.`
+    });
+    navigate("/team-members");
   }
 
   return (
     <AppLayout title="Add Team Member">
-      <div className="max-w-md mx-auto bg-white dark:bg-gray-900 rounded-lg shadow p-8">
-        <h2 className="text-2xl font-bold mb-6">Add New Team Member</h2>
-        <form className="space-y-5" onSubmit={handleSubmit}>
-          <div>
-            <label className="block font-medium mb-1">Name</label>
-            <input
-              className="w-full border px-3 py-2 rounded"
-              value={name}
-              onChange={e => setName(e.target.value)}
-              required
-            />
+      <div className="max-w-md mx-auto">
+        <div className="flex items-center gap-3 mb-6">
+          <Button 
+            variant="outline" 
+            size="icon" 
+            onClick={() => navigate('/team-members')}
+            className="h-8 w-8"
+          >
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+          <h1 className="text-2xl font-bold">Add Team Member</h1>
+        </div>
+
+        <Card className="p-6">
+          <div className="flex items-center justify-center mb-6">
+            <div className="h-16 w-16 rounded-full bg-taskmate-purple/20 flex items-center justify-center">
+              <UserPlus className="h-8 w-8 text-taskmate-purple" />
+            </div>
           </div>
-          <div>
-            <label className="block font-medium mb-1">Email Address</label>
-            <input
-              className="w-full border px-3 py-2 rounded"
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" className="w-full bg-taskmate-purple text-white font-semibold rounded py-2 hover:bg-taskmate-purple/90">
-            Add Member
-          </button>
-        </form>
+
+          <form className="space-y-5" onSubmit={handleSubmit}>
+            <div>
+              <label className="block font-medium mb-1 text-foreground">Name</label>
+              <Input
+                value={name}
+                onChange={e => setName(e.target.value)}
+                required
+                placeholder="Enter full name"
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-1 text-foreground">Email Address</label>
+              <Input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+                placeholder="Enter email address"
+              />
+            </div>
+            <Button type="submit" className="w-full bg-taskmate-purple hover:bg-taskmate-purple/90">
+              Add Member
+            </Button>
+          </form>
+        </Card>
       </div>
     </AppLayout>
   );
