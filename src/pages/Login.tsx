@@ -32,16 +32,16 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-bloom-blue/30 to-bloom-purple/10">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-taskmate-purple/30 to-taskmate-purple/10">
       <div className="w-full max-w-md px-4 py-8">
         <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-bloom-dark-purple mb-2">TaskMate</h1>
+          <h1 className="text-4xl font-bold text-taskmate-purple mb-2">TaskMate</h1>
           <p className="text-gray-600">AI-Powered Team Management</p>
         </div>
         
-        <Card>
+        <Card className="border-taskmate-purple/20 shadow-lg">
           <CardHeader>
-            <CardTitle>Sign In</CardTitle>
+            <CardTitle className="text-taskmate-purple">Sign In</CardTitle>
             <CardDescription>
               Enter your credentials to access your account
             </CardDescription>
@@ -58,6 +58,7 @@ const Login = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
+                    className="border-taskmate-purple/25 focus-visible:ring-taskmate-purple"
                   />
                 </div>
                 <div className="grid gap-2">
@@ -68,9 +69,14 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    className="border-taskmate-purple/25 focus-visible:ring-taskmate-purple"
                   />
                 </div>
-                <Button type="submit" className="w-full bg-primary hover:bg-bloom-purple/90" disabled={isLoading}>
+                <Button 
+                  type="submit" 
+                  className="w-full bg-taskmate-purple hover:bg-taskmate-purple/90 text-white font-medium transition-all" 
+                  disabled={isLoading}
+                >
                   {isLoading ? "Signing in..." : "Sign In"}
                 </Button>
               </div>
