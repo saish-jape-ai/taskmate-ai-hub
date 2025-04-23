@@ -35,7 +35,7 @@ const Login = () => {
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-bloom-blue/30 to-bloom-purple/10">
       <div className="w-full max-w-md px-4 py-8">
         <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-bloom-dark-purple mb-2">BloomTeam</h1>
+          <h1 className="text-4xl font-bold text-bloom-dark-purple mb-2">TaskMate</h1>
           <p className="text-gray-600">AI-Powered Team Management</p>
         </div>
         
@@ -70,7 +70,7 @@ const Login = () => {
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full bg-bloom-purple hover:bg-bloom-purple/90" disabled={isLoading}>
+                <Button type="submit" className="w-full bg-primary hover:bg-bloom-purple/90" disabled={isLoading}>
                   {isLoading ? "Signing in..." : "Sign In"}
                 </Button>
               </div>
