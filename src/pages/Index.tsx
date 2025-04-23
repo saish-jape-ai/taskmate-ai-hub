@@ -1,8 +1,11 @@
-
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { AreaChart, Users, Settings, Info, Check, ArrowRight, BarChart, MessageSquare, FileText, Calendar, BrainCircuit, Robot, Sparkles, Zap } from 'lucide-react';
+import { 
+  AreaChart, Users, Settings, Info, Check, ArrowRight, 
+  BarChart, MessageSquare, FileText, Calendar, 
+  BrainCircuit, Bot, Sparkles, Zap, Bell 
+} from 'lucide-react';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -123,7 +126,7 @@ const Index = () => {
             
             <div className="p-6 rounded-xl bg-white dark:bg-gray-800 shadow-md border border-gray-100 dark:border-gray-700 transition-all hover:shadow-lg hover:scale-105">
               <div className="h-12 w-12 rounded-full bg-taskmate-purple/20 flex items-center justify-center mb-4">
-                <Robot className="h-6 w-6 text-taskmate-purple" />
+                <Bot className="h-6 w-6 text-taskmate-purple" />
               </div>
               <h3 className="text-xl font-bold mb-2">AI Assistant</h3>
               <p className="text-muted-foreground">Personal AI assistant helps with daily tasks, answers questions, and provides guidance.</p>
