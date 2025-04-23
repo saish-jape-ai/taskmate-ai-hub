@@ -1,4 +1,3 @@
-
 import { User, Team, Task, Notification, PerformanceMetric, Conversation, Message, AIAssistantConversation } from '@/types';
 
 // Mock Teams
@@ -262,7 +261,7 @@ export const conversations: Conversation[] = [
       {
         id: 'msg1',
         senderId: '2',
-        content: 'Hi, how's the dashboard mockup going?',
+        content: 'Hi, how\'s the dashboard mockup going?',
         timestamp: '2025-04-20T09:30:00Z',
         readBy: ['2', '3'],
         mentions: []
@@ -270,7 +269,7 @@ export const conversations: Conversation[] = [
       {
         id: 'msg2',
         senderId: '3',
-        content: 'Going well! I've completed the main layout and working on the charts now.',
+        content: 'Going well! I\'ve completed the main layout and working on the charts now.',
         timestamp: '2025-04-20T09:32:00Z',
         readBy: ['2', '3'],
         mentions: []
@@ -303,7 +302,7 @@ export const conversations: Conversation[] = [
       {
         id: 'msg5',
         senderId: '4',
-        content: 'I'll prepare the technical overview for the meeting.',
+        content: 'I\'ll prepare the technical overview for the meeting.',
         timestamp: '2025-04-19T15:05:00Z',
         readBy: ['2', '3', '4', '5'],
         mentions: []
