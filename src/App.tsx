@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,6 +12,9 @@ import Tasks from "./pages/Tasks";
 import Chat from "./pages/Chat";
 import Notifications from "./pages/Notifications";
 import Analytics from "./pages/Analytics";
+import Teams from "./pages/Teams";
+import Settings from "./pages/Settings";
+import AddTeamMember from "./pages/AddTeamMember";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +33,9 @@ const App = () => (
             <Route path="/chat" element={<Chat />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/analytics" element={<Analytics />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="/teams" element={<Teams />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/add-team-member" element={<AddTeamMember />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
