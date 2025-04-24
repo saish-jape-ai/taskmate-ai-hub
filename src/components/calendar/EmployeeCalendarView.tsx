@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -170,7 +169,7 @@ export const EmployeeCalendarView = ({ view, onDateSelect, onEODRequest }: Emplo
     return eodForDate?.mood || null;
   };
   
-  // Custom day rendering for the calendar
+  // Modified renderDay function to fix type errors
   const renderDay = (day: Date, selectedDay: Date | undefined, dayProps: Record<string, any>) => {
     const isSelected = selectedDay ? isSameDay(day, selectedDay) : false;
     const missedEOD = highlightMissedEODs && hasMissedEOD(day);
@@ -183,7 +182,7 @@ export const EmployeeCalendarView = ({ view, onDateSelect, onEODRequest }: Emplo
     return (
       <div className={`relative w-full h-full ${isSelected ? 'bg-taskmate-purple text-white' : ''}`}>
         <div {...dayProps}>
-          {day.getDate()}
+          {format(day, "d")}
         </div>
         
         {/* Task indicator */}
@@ -373,7 +372,7 @@ export const EmployeeCalendarView = ({ view, onDateSelect, onEODRequest }: Emplo
                 onSelect={handleDateSelect}
                 className="mx-auto max-w-md"
                 components={{
-                  Day: ({ day, selected, ...props }) => renderDay(day, selected, props)
+                  Day: (props) => renderDay(props.date, selectedDate, props)
                 }}
               />
             </div>

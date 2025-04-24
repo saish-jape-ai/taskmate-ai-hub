@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Clock, ClockCheck, FileText, Sparkles, CheckCircle2, FileImage, FileSpreadsheet, FileEdit, Calendar as CalendarIcon, X, PlusCircle } from "lucide-react";
+import { ArrowLeft, Clock, CheckCheck, FileText, Sparkles, CheckCircle2, FileImage, FileSpreadsheet, FileEdit, Calendar as CalendarIcon, X, PlusCircle } from "lucide-react";
 import { DailySummary } from "./DailySummary";
 import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
@@ -155,7 +155,7 @@ export const CalendarDaySidebar = ({ date, onClose, onEODRequest }: CalendarDayS
                   <span className="text-sm">{clockInTime || 'Not clocked in'}</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <ClockCheck className="h-4 w-4 text-muted-foreground" />
+                  <CheckCheck className="h-4 w-4 text-muted-foreground" />
                   <span className="text-sm font-medium">Clock Out:</span>
                   <span className="text-sm">{clockOutTime || 'Not clocked out'}</span>
                 </div>
