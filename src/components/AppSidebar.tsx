@@ -13,7 +13,7 @@ import {
   SidebarSeparator
 } from "@/components/ui/sidebar";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Users, LayoutDashboard, Settings, MessageSquare, List, Grid2x2, LogOut, FileText, Bell, Bot, PanelLeftClose } from "lucide-react";
+import { Users, LayoutDashboard, Settings, MessageSquare, List, Grid2x2, LogOut, FileText, Bell, Bot, PanelLeftClose, CalendarDays } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "./ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
@@ -35,6 +35,7 @@ export function AppSidebar() {
     { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
     { title: "Tasks", url: "/tasks", icon: List },
     { title: "Chat", url: "/chat", icon: MessageSquare },
+    { title: "Calendar", url: "/calendar", icon: CalendarDays },
     { title: "Analytics", url: "/analytics", icon: Grid2x2 }
   ];
 

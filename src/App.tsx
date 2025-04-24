@@ -22,6 +22,7 @@ import EOD from "./pages/EOD";
 import Reminders from "./pages/Reminders";
 import AiChat from "./pages/AiChat";
 import CreateTeam from "./pages/CreateTeam";
+import Calendar from "./pages/Calendar";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => (
             <Route path="/reminders" element={<Reminders />} />
             <Route path="/ai-chat" element={<AiChat />} />
             <Route path="/create-team" element={<CreateTeam />} />
+            <Route path="/calendar" element={<Calendar />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
