@@ -38,7 +38,10 @@ const Teams = () => {
           </div>
           
           <div className="flex gap-3">
-            <Button className="bg-taskmate-purple hover:bg-taskmate-purple/90">
+            <Button 
+              className="bg-taskmate-purple hover:bg-taskmate-purple/90"
+              onClick={() => navigate("/create-team")}
+            >
               <Plus className="h-4 w-4 mr-2" />
               Add New Team
             </Button>

@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -10,10 +10,22 @@ import { aiAssistantConversations } from '@/data/mockData';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
 
-export const AIAssistantPanel = () => {
+interface AIAssistantPanelProps {
+  fullScreen?: boolean;
+}
+
+export const AIAssistantPanel = ({ fullScreen = false }: AIAssistantPanelProps) => {
   const { currentUser } = useAuth();
   const [inputMessage, setInputMessage] = useState('');
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(fullScreen);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  
+  // Auto-expand when in full-screen mode
+  useEffect(() => {
+    if (fullScreen) {
+      setIsExpanded(true);
+    }
+  }, [fullScreen]);
   
   if (!currentUser) return null;
   
@@ -38,8 +50,15 @@ export const AIAssistantPanel = () => {
       }, 1500);
     }, 300);
   };
+
+  // Auto scroll to bottom when messages change
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
+    }
+  }, [userConversation.messages]);
   
-  if (!isExpanded) {
+  if (!isExpanded && !fullScreen) {
     return (
       <Card className="overflow-hidden hover:shadow-md transition-shadow">
         <CardHeader className="bg-bloom-purple/10 cursor-pointer" onClick={() => setIsExpanded(true)}>
@@ -60,7 +79,7 @@ export const AIAssistantPanel = () => {
   }
   
   return (
-    <Card className="flex flex-col h-[400px]">
+    <Card className={`flex flex-col ${fullScreen ? 'h-full' : 'h-[400px]'}`}>
       <CardHeader className="bg-bloom-purple/10 py-3 px-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -69,16 +88,18 @@ export const AIAssistantPanel = () => {
             </div>
             <CardTitle className="text-sm">AI Assistant</CardTitle>
           </div>
-          <Button variant="ghost" size="sm" onClick={() => setIsExpanded(false)}>
-            Minimize
-          </Button>
+          {!fullScreen && (
+            <Button variant="ghost" size="sm" onClick={() => setIsExpanded(false)}>
+              Minimize
+            </Button>
+          )}
         </div>
         <CardDescription className="text-xs mt-1">
           Ask me anything about your tasks or performance
         </CardDescription>
       </CardHeader>
       
-      <ScrollArea className="flex-1 p-3">
+      <ScrollArea className="flex-1 p-3 overflow-auto" ref={scrollAreaRef}>
         <div className="space-y-4">
           {userConversation.messages.map((message, index) => (
             <div 

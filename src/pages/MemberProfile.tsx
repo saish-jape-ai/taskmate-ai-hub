@@ -8,6 +8,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Mail, Phone, Calendar, MessageSquare, FileText } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { EodHistoryTab } from '@/components/eod/EodHistoryTab';
 
 const MemberProfile = () => {
   const { id } = useParams<{ id: string }>();
@@ -95,10 +96,11 @@ const MemberProfile = () => {
           {/* Content Section */}
           <div className="lg:col-span-2">
             <Tabs defaultValue="performance" className="w-full">
-              <TabsList className="grid grid-cols-3 mb-6">
+              <TabsList className="grid grid-cols-4 mb-6">
                 <TabsTrigger value="performance">Performance</TabsTrigger>
                 <TabsTrigger value="tasks">Tasks</TabsTrigger>
-                <TabsTrigger value="skills">Skills & Projects</TabsTrigger>
+                <TabsTrigger value="skills">Skills</TabsTrigger>
+                <TabsTrigger value="eods">EODs</TabsTrigger>
               </TabsList>
               
               <TabsContent value="performance">
@@ -215,6 +217,10 @@ const MemberProfile = () => {
                     </div>
                   </div>
                 </Card>
+              </TabsContent>
+              
+              <TabsContent value="eods">
+                <EodHistoryTab userId={member.id} />
               </TabsContent>
             </Tabs>
           </div>

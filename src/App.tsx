@@ -20,6 +20,8 @@ import TeamMembers from "./pages/TeamMembers";
 import MemberProfile from "./pages/MemberProfile";
 import EOD from "./pages/EOD";
 import Reminders from "./pages/Reminders";
+import AiChat from "./pages/AiChat";
+import CreateTeam from "./pages/CreateTeam";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +47,8 @@ const App = () => (
             <Route path="/member-profile/:id" element={<MemberProfile />} />
             <Route path="/eod" element={<EOD />} />
             <Route path="/reminders" element={<Reminders />} />
+            <Route path="/ai-chat" element={<AiChat />} />
+            <Route path="/create-team" element={<CreateTeam />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
