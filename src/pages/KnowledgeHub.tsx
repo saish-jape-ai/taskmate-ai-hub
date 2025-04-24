@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { AppLayout } from '@/components/AppLayout';
+import AppLayout from '@/components/AppLayout';  // Changed from named import to default import
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { KnowledgeCard } from '@/components/knowledge/KnowledgeCard';
