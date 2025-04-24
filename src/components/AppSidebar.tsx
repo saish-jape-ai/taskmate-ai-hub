@@ -58,7 +58,7 @@ export function AppSidebar() {
   return (
     <Sidebar className={`border-r border-border bg-white dark:bg-sidebar-background transition-all duration-200 ${isCollapsed ? 'w-[60px]' : ''}`}>
       <SidebarHeader>
-        <div className={`flex items-center ${isCollapsed ? 'justify-center' : ''} gap-2 pl-4 pt-4 pb-2`}>
+        <div className={`flex items-center ${isCollapsed ? 'justify-center' : ''} gap-2 pl-1 pt-4 pb-2`}>
           <span className="bg-taskmate-purple/10 p-2 rounded-lg">
             <LayoutDashboard className="h-6 w-6 text-taskmate-purple" />
           </span>
@@ -71,27 +71,7 @@ export function AppSidebar() {
         </div>
       </SidebarHeader>
       <SidebarSeparator />
-      
-      {currentUser && (
-        <div className={`px-4 py-3 ${isCollapsed ? 'flex justify-center' : ''}`}>
-          <div className="flex items-center gap-3">
-            <Avatar>
-              <AvatarImage 
-                src={currentUser.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name)}&background=9b87f5&color=fff`} 
-                alt={currentUser.name} 
-              />
-              <AvatarFallback>{currentUser.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            {!isCollapsed && (
-              <div>
-                <p className="font-medium text-sm">{currentUser.name}</p>
-                <p className="text-xs text-muted-foreground capitalize">{currentUser.role.replace('_', ' ')}</p>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-      
+            
       <SidebarSeparator />
       
       <SidebarContent>
