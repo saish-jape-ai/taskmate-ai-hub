@@ -13,15 +13,17 @@ import {
   SidebarSeparator
 } from "@/components/ui/sidebar";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Users, LayoutDashboard, Settings, MessageSquare, List, Grid2x2, LogOut, FileText, Bell } from "lucide-react";
+import { Users, LayoutDashboard, Settings, MessageSquare, List, Grid2x2, LogOut, FileText, Bell, Bot, PanelLeftClose } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "./ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
+import { useState } from "react";
 
 export function AppSidebar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { currentUser, logout } = useAuth();
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -47,19 +49,22 @@ export function AppSidebar() {
   
   if (currentUser?.role === "employee") {
     sidebarMenu.push({ title: "EOD", url: "/eod", icon: FileText });
+    sidebarMenu.push({ title: "AI Assistant", url: "/ai-chat", icon: Bot });
   }
 
   return (
-    <Sidebar className="border-r border-border bg-white dark:bg-sidebar-background">
+    <Sidebar className={`border-r border-border bg-white dark:bg-sidebar-background transition-all duration-200 ${isCollapsed ? 'w-[60px]' : ''}`}>
       <SidebarHeader>
         <div className="flex items-center gap-2 pl-4 pt-4 pb-2">
           <span className="bg-taskmate-purple/10 p-2 rounded-lg">
             <LayoutDashboard className="h-6 w-6 text-taskmate-purple" />
           </span>
-          <div>
-            <h1 className="font-bold text-lg">TaskMate</h1>
-            <p className="text-xs text-muted-foreground">Work Smarter</p>
-          </div>
+          {!isCollapsed && (
+            <div>
+              <h1 className="font-bold text-lg">TaskMate</h1>
+              <p className="text-xs text-muted-foreground">Work Smarter</p>
+            </div>
+          )}
         </div>
       </SidebarHeader>
       <SidebarSeparator />
@@ -74,10 +79,12 @@ export function AppSidebar() {
               />
               <AvatarFallback>{currentUser.name.charAt(0)}</AvatarFallback>
             </Avatar>
-            <div>
-              <p className="font-medium text-sm">{currentUser.name}</p>
-              <p className="text-xs text-muted-foreground capitalize">{currentUser.role.replace('_', ' ')}</p>
-            </div>
+            {!isCollapsed && (
+              <div>
+                <p className="font-medium text-sm">{currentUser.name}</p>
+                <p className="text-xs text-muted-foreground capitalize">{currentUser.role.replace('_', ' ')}</p>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -94,9 +101,10 @@ export function AppSidebar() {
                     isActive={pathname.startsWith(item.url)}
                     onClick={() => navigate(item.url)}
                     className={pathname.startsWith(item.url) ? "text-taskmate-purple bg-taskmate-purple/10" : ""}
+                    tooltip={isCollapsed ? item.title : undefined}
                   >
                     <item.icon className="h-5 w-5" />
-                    <span>{item.title}</span>
+                    {!isCollapsed && <span>{item.title}</span>}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -105,9 +113,10 @@ export function AppSidebar() {
                   isActive={pathname === "/settings"}
                   onClick={() => navigate("/settings")}
                   className={pathname === "/settings" ? "text-taskmate-purple bg-taskmate-purple/10" : ""}
+                  tooltip={isCollapsed ? "Settings" : undefined}
                 >
                   <Settings className="h-5 w-5" />
-                  <span>Settings</span>
+                  {!isCollapsed && <span>Settings</span>}
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
@@ -122,11 +131,21 @@ export function AppSidebar() {
           className="w-full justify-start text-red-600 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-900/20"
         >
           <LogOut className="h-4 w-4 mr-2" />
-          Log Out
+          {!isCollapsed && "Log Out"}
         </Button>
-        <div className="p-2 text-center text-xs text-muted-foreground">
-          © 2025 TaskMate
-        </div>
+        <Button
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          variant="ghost"
+          className="w-full justify-start"
+        >
+          <PanelLeftClose className={`h-4 w-4 mr-2 transition-transform ${isCollapsed ? 'rotate-180' : ''}`} />
+          {!isCollapsed && (isCollapsed ? "Expand" : "Collapse")}
+        </Button>
+        {!isCollapsed && (
+          <div className="p-2 text-center text-xs text-muted-foreground">
+            © 2025 TaskMate
+          </div>
+        )}
       </SidebarFooter>
     </Sidebar>
   );

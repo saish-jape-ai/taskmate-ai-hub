@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,6 +17,7 @@ import Settings from "./pages/Settings";
 import AddTeamMember from "./pages/AddTeamMember";
 import TeamMembers from "./pages/TeamMembers";
 import EOD from "./pages/EOD";
+import Reminders from "./pages/Reminders";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +41,7 @@ const App = () => (
             <Route path="/add-team-member" element={<AddTeamMember />} />
             <Route path="/team-members" element={<TeamMembers />} />
             <Route path="/eod" element={<EOD />} />
+            <Route path="/reminders" element={<Reminders />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
