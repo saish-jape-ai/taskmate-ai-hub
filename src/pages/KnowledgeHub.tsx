@@ -1,859 +1,688 @@
 
-import { useState } from 'react';
-import AppLayout from '@/components/AppLayout';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import React, { useState } from 'react';
+import { AppLayout } from '@/components/AppLayout';
 import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { KnowledgeCard } from '@/components/knowledge/KnowledgeCard';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { 
   LayoutDashboard, 
-  List, 
+  ListTodo, 
   MessageSquare, 
-  CalendarDays, 
-  Bell, 
-  FileText, 
   Users, 
+  CalendarDays, 
   Bot, 
-  Brain, 
-  Lightbulb, 
-  Play, 
-  Download,
-  Book,
-  FileChart,
-  GitBranch,
-  Shield,
-  Component,
-  Compass,
-  Puzzle
+  Bell, 
+  FileText,
+  BarChart,
+  FileHeart, 
+  Download 
 } from 'lucide-react';
-import { 
-  Collapsible, 
-  CollapsibleContent, 
-  CollapsibleTrigger 
-} from '@/components/ui/collapsible';
-import { useAuth } from '@/context/AuthContext';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import { cn } from '@/lib/utils';
+import { Card } from '@/components/ui/card';
 
-const KnowledgeHub = () => {
-  const [activeTab, setActiveTab] = useState('overview');
-  const { currentUser } = useAuth();
-
-  // Function to download guide as PDF (placeholder)
-  const downloadGuide = () => {
-    alert('This would download the complete guide as PDF. Feature to be implemented with PDF generation library.');
+const KnowledgeHub: React.FC = () => {
+  const [activeTab, setActiveTab] = useState("overview");
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
   return (
-    <AppLayout title="Project Overview">
-      <div className="flex flex-col gap-6">
-        {/* Header section */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <AppLayout>
+      <div className={`p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+        <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-3xl font-bold flex items-center gap-2">
-              <Book className="h-8 w-8 text-taskmate-purple" />
-              TaskMate Knowledge Hub
-            </h1>
-            <p className="text-muted-foreground mt-1">
-              Complete guide to understanding and using the TaskMate platform
-            </p>
+            <h1 className="text-3xl font-bold">📘 Project Overview</h1>
+            <p className="text-muted-foreground">Complete guide to the TaskMate application</p>
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={downloadGuide}>
-              <Download className="h-4 w-4 mr-2" />
-              Download Guide
+          <div className="flex items-center gap-4">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={toggleTheme}
+              className={theme === 'dark' ? 'bg-gray-800 border-gray-700' : ''}
+            >
+              {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
+            </Button>
+            <Button variant="outline" size="sm">
+              <Download className="mr-2 h-4 w-4" />
+              Download PDF
             </Button>
           </div>
         </div>
 
-        {/* Main content tabs */}
-        <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-2 md:grid-cols-5 w-full">
+        <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="mb-6">
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="quickstart">Quick Start</TabsTrigger>
             <TabsTrigger value="modules">Modules</TabsTrigger>
-            <TabsTrigger value="roles">Role Guides</TabsTrigger>
+            <TabsTrigger value="roles">Role-Based Guide</TabsTrigger>
             <TabsTrigger value="ai">AI Features</TabsTrigger>
+            <TabsTrigger value="quickstart">Quick Start Guide</TabsTrigger>
           </TabsList>
-
-          {/* Overview Tab */}
-          <TabsContent value="overview" className="space-y-6">
-            <Card className="border-taskmate-purple/20">
-              <CardHeader className="bg-taskmate-purple/5">
-                <CardTitle className="flex items-center gap-2">
-                  <Compass className="h-5 w-5 text-taskmate-purple" />
-                  Welcome to TaskMate
-                </CardTitle>
-                <CardDescription>
-                  Your complete AI-powered team management solution
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-6">
+          
+          <ScrollArea className={`h-[calc(100vh-200px)] rounded-md border ${theme === 'dark' ? 'border-gray-800' : 'border-gray-200'} p-4`}>
+            <TabsContent value="overview" className="space-y-8">
+              <div>
+                <h2 className="text-2xl font-semibold mb-4">Welcome to TaskMate</h2>
                 <p className="mb-4">
-                  TaskMate is a comprehensive team management platform designed to optimize productivity with 
-                  intelligent task management, AI-driven analytics, and robust communication tools.
+                  TaskMate is a comprehensive AI-powered team management platform designed to streamline workflow, 
+                  enhance collaboration, and boost productivity across organizations of all sizes.
                 </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                  <FeatureCard
-                    icon={<GitBranch className="h-6 w-6 text-taskmate-purple" />}
-                    title="Intuitive Workflow"
-                    description="Streamlined processes for efficient team collaboration and task management"
-                  />
-                  <FeatureCard
-                    icon={<Brain className="h-6 w-6 text-taskmate-purple" />}
-                    title="AI Integration"
-                    description="Intelligent features powered by AI to enhance productivity"
-                  />
-                  <FeatureCard
-                    icon={<Shield className="h-6 w-6 text-taskmate-purple" />}
-                    title="Role-Based Access"
-                    description="Tailored experiences for Super Admins, Team Leaders, and Employees"
-                  />
+                <div className="grid md:grid-cols-2 gap-6 mt-8">
+                  <KnowledgeCard 
+                    title="Platform Overview" 
+                    description="Understand the core components of TaskMate"
+                    icon={<LayoutDashboard className="h-5 w-5" />}
+                    variant="highlight"
+                  >
+                    <p>
+                      TaskMate combines task management, team collaboration, performance analytics, 
+                      and AI assistance in one unified platform. The system adapts to different roles, 
+                      providing tailored experiences for Super Admins, Team Leaders, and Employees.
+                    </p>
+                    <div className="mt-4 p-3 bg-blue-50 rounded-md dark:bg-blue-950">
+                      <p className="text-sm font-medium">Key Components:</p>
+                      <ul className="list-disc pl-5 mt-2 text-sm space-y-1">
+                        <li>Task assignment and tracking</li>
+                        <li>Team communication channels</li>
+                        <li>End-of-Day (EOD) reporting</li>
+                        <li>Performance analytics and insights</li>
+                        <li>AI-powered assistance and productivity tools</li>
+                      </ul>
+                    </div>
+                  </KnowledgeCard>
+                  
+                  <KnowledgeCard 
+                    title="How Data Flows" 
+                    description="Understand how information moves through TaskMate"
+                    icon={<Bot className="h-5 w-5" />}
+                  >
+                    <div className="border rounded p-3 bg-gray-50 dark:bg-gray-800">
+                      <p className="text-center font-medium mb-2">TaskMate Data Flow</p>
+                      <div className="flex flex-col items-center space-y-2">
+                        <div className="bg-blue-100 dark:bg-blue-900 rounded p-2 w-full text-center">
+                          Task Creation &amp; Assignment
+                        </div>
+                        <div className="text-center">↓</div>
+                        <div className="bg-green-100 dark:bg-green-900 rounded p-2 w-full text-center">
+                          Work Tracking &amp; Progress Updates
+                        </div>
+                        <div className="text-center">↓</div>
+                        <div className="bg-purple-100 dark:bg-purple-900 rounded p-2 w-full text-center">
+                          EOD Reporting &amp; Documentation
+                        </div>
+                        <div className="text-center">↓</div>
+                        <div className="bg-amber-100 dark:bg-amber-900 rounded p-2 w-full text-center">
+                          Analytics &amp; AI-Powered Insights
+                        </div>
+                        <div className="text-center">↓</div>
+                        <div className="bg-red-100 dark:bg-red-900 rounded p-2 w-full text-center">
+                          Performance Review &amp; Optimization
+                        </div>
+                      </div>
+                    </div>
+                  </KnowledgeCard>
                 </div>
-
-                <div className="bg-muted p-4 rounded-lg mt-6">
-                  <h4 className="text-lg font-medium mb-2 flex items-center gap-2">
-                    <Puzzle className="h-5 w-5 text-taskmate-purple" />
-                    How TaskMate Works
-                  </h4>
-                  <p className="text-muted-foreground mb-4">
-                    TaskMate seamlessly connects team members across different roles, providing specific tools 
-                    and features based on each user's responsibilities.
-                  </p>
-                  <img 
-                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
-                    alt="TaskMate Workflow" 
-                    className="w-full h-auto rounded-lg border border-border"
-                  />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="modules" className="space-y-8">
+              <h2 className="text-2xl font-semibold mb-4">Application Modules</h2>
+              <p className="mb-6">TaskMate consists of several interconnected modules that work together to provide a complete team management solution:</p>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                <KnowledgeCard 
+                  title="Dashboard" 
+                  icon={<LayoutDashboard className="h-5 w-5" />}
+                  description="Your productivity command center"
+                >
+                  <div className="space-y-3">
+                    <p><strong>Purpose:</strong> Provides an overview of tasks, activities, and key metrics.</p>
+                    <p><strong>Key Features:</strong></p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Role-based dashboard views</li>
+                      <li>Activity summaries and notifications</li>
+                      <li>Performance metrics and charts</li>
+                      <li>Quick access to critical tasks</li>
+                    </ul>
+                    <p><strong>Integration:</strong> Connected to all other modules for data aggregation.</p>
+                  </div>
+                </KnowledgeCard>
+                
+                <KnowledgeCard 
+                  title="Tasks" 
+                  icon={<ListTodo className="h-5 w-5" />}
+                  description="Manage and track work items"
+                >
+                  <div className="space-y-3">
+                    <p><strong>Purpose:</strong> Create, assign, and track tasks across teams.</p>
+                    <p><strong>Key Features:</strong></p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Task creation and assignment</li>
+                      <li>Priority levels and deadlines</li>
+                      <li>Status tracking and updates</li>
+                      <li>AI-powered task suggestions</li>
+                    </ul>
+                    <p><strong>Integration:</strong> Linked with Calendar, EOD, and Analytics modules.</p>
+                  </div>
+                </KnowledgeCard>
+                
+                <KnowledgeCard 
+                  title="Chat" 
+                  icon={<MessageSquare className="h-5 w-5" />}
+                  description="Team communication platform"
+                >
+                  <div className="space-y-3">
+                    <p><strong>Purpose:</strong> Facilitate real-time communication between team members.</p>
+                    <p><strong>Key Features:</strong></p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Individual and group messaging</li>
+                      <li>File sharing and collaboration</li>
+                      <li>Message search and history</li>
+                      <li>Integration with tasks and projects</li>
+                    </ul>
+                    <p><strong>Integration:</strong> Connected with Tasks for context-based discussions.</p>
+                  </div>
+                </KnowledgeCard>
+                
+                <KnowledgeCard 
+                  title="Calendar" 
+                  icon={<CalendarDays className="h-5 w-5" />}
+                  description="Schedule and time management"
+                >
+                  <div className="space-y-3">
+                    <p><strong>Purpose:</strong> Track deadlines, meetings, and work schedules.</p>
+                    <p><strong>Key Features:</strong></p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Multiple calendar views (day, week, month)</li>
+                      <li>Task deadline integration</li>
+                      <li>Time tracking capabilities</li>
+                      <li>AI-generated daily summaries</li>
+                    </ul>
+                    <p><strong>Integration:</strong> Works with Tasks, EOD, and Reminders modules.</p>
+                  </div>
+                </KnowledgeCard>
+                
+                <KnowledgeCard 
+                  title="EOD Reports" 
+                  icon={<FileText className="h-5 w-5" />}
+                  description="End-of-day activity documentation"
+                >
+                  <div className="space-y-3">
+                    <p><strong>Purpose:</strong> Document daily accomplishments and plan for the next day.</p>
+                    <p><strong>Key Features:</strong></p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Structured reporting templates</li>
+                      <li>Accomplishment tracking</li>
+                      <li>Blockers and challenges documentation</li>
+                      <li>Next-day planning assistance</li>
+                    </ul>
+                    <p><strong>Integration:</strong> Data feeds into Analytics and Calendar modules.</p>
+                  </div>
+                </KnowledgeCard>
+                
+                <KnowledgeCard 
+                  title="AI Assistant" 
+                  icon={<Bot className="h-5 w-5" />}
+                  description="Intelligent productivity enhancement"
+                >
+                  <div className="space-y-3">
+                    <p><strong>Purpose:</strong> Provide AI-powered assistance across the platform.</p>
+                    <p><strong>Key Features:</strong></p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Smart task suggestions</li>
+                      <li>EOD summary generation</li>
+                      <li>Performance insights and tips</li>
+                      <li>Natural language interface</li>
+                    </ul>
+                    <p><strong>Integration:</strong> Integrates with all modules to provide contextual AI assistance.</p>
+                  </div>
+                </KnowledgeCard>
+                
+                <KnowledgeCard 
+                  title="Analytics" 
+                  icon={<BarChart className="h-5 w-5" />}
+                  description="Performance metrics and insights"
+                >
+                  <div className="space-y-3">
+                    <p><strong>Purpose:</strong> Track and analyze productivity and performance metrics.</p>
+                    <p><strong>Key Features:</strong></p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Individual and team performance dashboards</li>
+                      <li>Task completion analytics</li>
+                      <li>Time tracking and utilization metrics</li>
+                      <li>AI-powered performance insights</li>
+                    </ul>
+                    <p><strong>Integration:</strong> Pulls data from Tasks, EOD, and Calendar modules.</p>
+                  </div>
+                </KnowledgeCard>
+                
+                <KnowledgeCard 
+                  title="Reminders" 
+                  icon={<Bell className="h-5 w-5" />}
+                  description="Automated notifications and alerts"
+                >
+                  <div className="space-y-3">
+                    <p><strong>Purpose:</strong> Ensure timely completion of tasks and deadlines.</p>
+                    <p><strong>Key Features:</strong></p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Deadline notifications</li>
+                      <li>EOD report reminders</li>
+                      <li>Task status update prompts</li>
+                      <li>Smart reminder scheduling</li>
+                    </ul>
+                    <p><strong>Integration:</strong> Works with Tasks, Calendar, and EOD modules.</p>
+                  </div>
+                </KnowledgeCard>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="roles" className="space-y-6">
+              <h2 className="text-2xl font-semibold mb-4">Role-Based Guide</h2>
+              <p className="mb-6">
+                TaskMate provides different experiences based on user roles, ensuring everyone 
+                has access to the tools they need while maintaining appropriate permissions:
+              </p>
+              
+              <div className="grid md:grid-cols-3 gap-6">
+                <Card className="p-6">
+                  <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
+                    <Users className="h-5 w-5" />
+                    Super Admin
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-3">Complete system oversight and management</p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <p className="font-medium">Access to:</p>
+                      <ul className="list-disc pl-5 mt-1 space-y-1 text-sm">
+                        <li>All TaskMate modules and features</li>
+                        <li>Organization-wide analytics</li>
+                        <li>Team creation and management</li>
+                        <li>User administration</li>
+                        <li>System configuration</li>
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <p className="font-medium">Key responsibilities:</p>
+                      <ul className="list-disc pl-5 mt-1 space-y-1 text-sm">
+                        <li>Create and manage teams</li>
+                        <li>Assign team leaders</li>
+                        <li>Monitor organization-wide performance</li>
+                        <li>Configure system settings</li>
+                      </ul>
+                    </div>
+                  </div>
+                </Card>
+                
+                <Card className="p-6">
+                  <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
+                    <Users className="h-5 w-5" />
+                    Team Leader
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-3">Team management and oversight</p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <p className="font-medium">Access to:</p>
+                      <ul className="list-disc pl-5 mt-1 space-y-1 text-sm">
+                        <li>Team member management</li>
+                        <li>Team analytics and reports</li>
+                        <li>Task creation and assignment</li>
+                        <li>EOD review and feedback</li>
+                        <li>Team reminders</li>
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <p className="font-medium">Key responsibilities:</p>
+                      <ul className="list-disc pl-5 mt-1 space-y-1 text-sm">
+                        <li>Manage team members</li>
+                        <li>Assign and track tasks</li>
+                        <li>Review EOD reports</li>
+                        <li>Provide feedback and guidance</li>
+                        <li>Monitor team performance</li>
+                      </ul>
+                    </div>
+                  </div>
+                </Card>
+                
+                <Card className="p-6">
+                  <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
+                    <Users className="h-5 w-5" />
+                    Employee
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-3">Individual work management and reporting</p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <p className="font-medium">Access to:</p>
+                      <ul className="list-disc pl-5 mt-1 space-y-1 text-sm">
+                        <li>Personal task management</li>
+                        <li>EOD report submission</li>
+                        <li>Calendar and scheduling</li>
+                        <li>AI Assistant</li>
+                        <li>Individual analytics</li>
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <p className="font-medium">Key responsibilities:</p>
+                      <ul className="list-disc pl-5 mt-1 space-y-1 text-sm">
+                        <li>Complete assigned tasks</li>
+                        <li>Submit daily EOD reports</li>
+                        <li>Track time and activities</li>
+                        <li>Communicate with team members</li>
+                        <li>Review personal performance</li>
+                      </ul>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+              
+              <h3 className="text-xl font-semibold mt-8 mb-4">Module Access by Role</h3>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className={`${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'}`}>
+                      <th className="text-left p-3 border">Module</th>
+                      <th className="text-left p-3 border">Super Admin</th>
+                      <th className="text-left p-3 border">Team Leader</th>
+                      <th className="text-left p-3 border">Employee</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="p-3 border">Dashboard</td>
+                      <td className="p-3 border">Full access (organization-wide)</td>
+                      <td className="p-3 border">Team-level access</td>
+                      <td className="p-3 border">Personal view only</td>
+                    </tr>
+                    <tr className={`${theme === 'dark' ? 'bg-gray-800/50' : 'bg-gray-50'}`}>
+                      <td className="p-3 border">Tasks</td>
+                      <td className="p-3 border">Create, assign, view all</td>
+                      <td className="p-3 border">Create, assign to team</td>
+                      <td className="p-3 border">View assigned, update status</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 border">Teams</td>
+                      <td className="p-3 border">Create, manage all</td>
+                      <td className="p-3 border">View own team</td>
+                      <td className="p-3 border">View own team</td>
+                    </tr>
+                    <tr className={`${theme === 'dark' ? 'bg-gray-800/50' : 'bg-gray-50'}`}>
+                      <td className="p-3 border">EOD</td>
+                      <td className="p-3 border">View all, analytics</td>
+                      <td className="p-3 border">Review team EODs</td>
+                      <td className="p-3 border">Submit personal EOD</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 border">Analytics</td>
+                      <td className="p-3 border">Organization-wide insights</td>
+                      <td className="p-3 border">Team analytics</td>
+                      <td className="p-3 border">Personal analytics</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="ai" className="space-y-6">
+              <h2 className="text-2xl font-semibold mb-4">AI-Powered Features</h2>
+              <p className="mb-6">
+                TaskMate leverages artificial intelligence throughout the platform to enhance productivity, 
+                provide insights, and automate routine tasks:
+              </p>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                <KnowledgeCard 
+                  title="Smart Task Generation" 
+                  icon={<ListTodo className="h-5 w-5" />}
+                  variant="highlight"
+                >
+                  <div className="space-y-3">
+                    <p><strong>How it works:</strong> The AI analyzes past work patterns, team capabilities, and project requirements to suggest appropriate tasks.</p>
+                    <p><strong>Benefits:</strong></p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Reduces planning time for managers</li>
+                      <li>Ensures balanced workload distribution</li>
+                      <li>Identifies potential skill gaps</li>
+                      <li>Improves resource allocation</li>
+                    </ul>
+                    <div className="mt-4 p-3 bg-purple-50 rounded-md dark:bg-purple-950">
+                      <p className="text-sm italic">Example: "Based on the team's current workload and John's expertise, suggest assigning the database optimization task to him with a Thursday deadline."</p>
+                    </div>
+                  </div>
+                </KnowledgeCard>
+                
+                <KnowledgeCard 
+                  title="EOD Analysis & Feedback" 
+                  icon={<FileText className="h-5 w-5" />}
+                  variant="highlight"
+                >
+                  <div className="space-y-3">
+                    <p><strong>How it works:</strong> The AI reviews submitted EOD reports, extracts key information, and provides constructive feedback and insights.</p>
+                    <p><strong>Benefits:</strong></p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Identifies patterns in productivity</li>
+                      <li>Highlights accomplishments and challenges</li>
+                      <li>Suggests improvements for future work</li>
+                      <li>Generates standardized summaries</li>
+                    </ul>
+                    <div className="mt-4 p-3 bg-purple-50 rounded-md dark:bg-purple-950">
+                      <p className="text-sm italic">Example: "Your EOD shows you completed 3 major tasks today. AI analysis suggests you work best on creative tasks in the morning based on your completion patterns."</p>
+                    </div>
+                  </div>
+                </KnowledgeCard>
+                
+                <KnowledgeCard 
+                  title="Performance Analytics" 
+                  icon={<BarChart className="h-5 w-5" />}
+                >
+                  <div className="space-y-3">
+                    <p><strong>How it works:</strong> AI analyzes productivity metrics, task completion rates, and work patterns to generate insights and optimization recommendations.</p>
+                    <p><strong>Benefits:</strong></p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Identifies productivity trends</li>
+                      <li>Highlights strengths and improvement areas</li>
+                      <li>Recommends workflow optimizations</li>
+                      <li>Predicts potential bottlenecks</li>
+                    </ul>
+                    <div className="mt-4 p-3 bg-blue-50 rounded-md dark:bg-blue-950">
+                      <p className="text-sm italic">Example: "Team performance analysis shows highest productivity on Tuesdays. Consider scheduling important kickoffs on this day for optimal results."</p>
+                    </div>
+                  </div>
+                </KnowledgeCard>
+                
+                <KnowledgeCard 
+                  title="Smart Reminders" 
+                  icon={<Bell className="h-5 w-5" />}
+                >
+                  <div className="space-y-3">
+                    <p><strong>How it works:</strong> AI determines the optimal timing for reminders based on user behavior, task importance, and past response patterns.</p>
+                    <p><strong>Benefits:</strong></p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Reduces missed deadlines</li>
+                      <li>Prevents notification fatigue</li>
+                      <li>Prioritizes critical tasks</li>
+                      <li>Adapts to individual work styles</li>
+                    </ul>
+                    <div className="mt-4 p-3 bg-blue-50 rounded-md dark:bg-blue-950">
+                      <p className="text-sm italic">Example: "Based on your work patterns, you'll receive a reminder for the client presentation 3 hours before the deadline, which is when you typically finalize important tasks."</p>
+                    </div>
+                  </div>
+                </KnowledgeCard>
+                
+                <KnowledgeCard 
+                  title="AI Assistant Chat" 
+                  icon={<Bot className="h-5 w-5" />}
+                >
+                  <div className="space-y-3">
+                    <p><strong>How it works:</strong> A natural language interface that allows users to interact with the system's AI capabilities through conversation.</p>
+                    <p><strong>Benefits:</strong></p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Provides on-demand assistance</li>
+                      <li>Answers questions about work and tasks</li>
+                      <li>Offers contextual suggestions</li>
+                      <li>Simplifies complex system interactions</li>
+                    </ul>
+                    <div className="mt-4 p-3 bg-green-50 rounded-md dark:bg-green-950">
+                      <p className="text-sm italic">Example: "What tasks should I prioritize today?" → "Based on deadlines and team dependencies, focus on the API documentation first, then the database schema review."</p>
+                    </div>
+                  </div>
+                </KnowledgeCard>
+                
+                <KnowledgeCard 
+                  title="Daily Summary Generation" 
+                  icon={<CalendarDays className="h-5 w-5" />}
+                >
+                  <div className="space-y-3">
+                    <p><strong>How it works:</strong> AI automatically aggregates daily activities, achievements, and planned tasks into a concise, actionable summary.</p>
+                    <p><strong>Benefits:</strong></p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Saves time on reporting</li>
+                      <li>Ensures consistent documentation</li>
+                      <li>Highlights key accomplishments</li>
+                      <li>Identifies patterns and trends</li>
+                    </ul>
+                    <div className="mt-4 p-3 bg-green-50 rounded-md dark:bg-green-950">
+                      <p className="text-sm italic">Example: "Today you completed 4 tasks (2 high priority), spent 3.5 hours on development, and have 2 pending code reviews for tomorrow. Overall productivity: Above average."</p>
+                    </div>
+                  </div>
+                </KnowledgeCard>
+              </div>
+              
+              <div className="mt-8 p-4 border rounded-md bg-blue-50 dark:bg-blue-900">
+                <h3 className="text-xl font-semibold mb-3">How AI Integration Works</h3>
+                <p className="mb-4">
+                  TaskMate uses the Gemini API to power its AI capabilities, allowing for sophisticated 
+                  natural language processing, pattern recognition, and predictive analytics:
+                </p>
+                <ul className="list-disc pl-5 space-y-2">
+                  <li><strong>Data Processing:</strong> The AI analyzes user inputs, task data, and historical patterns</li>
+                  <li><strong>Contextual Understanding:</strong> Identifies relationships between data points and user intent</li>
+                  <li><strong>Personalization:</strong> Adapts responses and suggestions based on individual work styles</li>
+                  <li><strong>Continuous Learning:</strong> Improves over time as it processes more team-specific data</li>
+                </ul>
+                <p className="mt-4 text-sm">Note: All AI processing respects user privacy and data security protocols.</p>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="quickstart" className="space-y-6">
+              <h2 className="text-2xl font-semibold mb-4">Quick Start Guide</h2>
+              <p className="mb-6">
+                New to TaskMate? Follow this step-by-step guide to get started quickly:
+              </p>
+              
+              <div className="space-y-6">
+                <div className="p-4 border rounded-md">
+                  <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+                    <span className="bg-blue-100 dark:bg-blue-800 rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+                    Getting Started
+                  </h3>
+                  <ol className="list-decimal pl-6 space-y-2">
+                    <li>Log in with your provided credentials (email and password)</li>
+                    <li>Complete your profile information if prompted</li>
+                    <li>Take a moment to explore the dashboard layout</li>
+                    <li>Check any pending tasks or notifications</li>
+                  </ol>
                 </div>
-              </CardContent>
-              <CardFooter className="flex justify-end border-t pt-4">
-                <Button variant="ghost" size="sm" onClick={() => setActiveTab('quickstart')}>
-                  Get Started
-                  <Play className="ml-2 h-4 w-4" />
+                
+                <div className="p-4 border rounded-md">
+                  <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+                    <span className="bg-blue-100 dark:bg-blue-800 rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+                    Daily Workflow
+                  </h3>
+                  <ol className="list-decimal pl-6 space-y-2">
+                    <li>Begin your day by checking the Dashboard for an overview</li>
+                    <li>Review your assigned Tasks and prioritize your work</li>
+                    <li>Use the Calendar to manage your schedule</li>
+                    <li>Track your progress throughout the day</li>
+                    <li>Submit your EOD report before ending your workday</li>
+                  </ol>
+                </div>
+                
+                <div className="p-4 border rounded-md">
+                  <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+                    <span className="bg-blue-100 dark:bg-blue-800 rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
+                    Role-Specific Actions
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <p className="font-medium">For Super Admins:</p>
+                      <ul className="list-disc pl-5 space-y-1">
+                        <li>Set up teams and assign team leaders</li>
+                        <li>Configure system settings and permissions</li>
+                        <li>Monitor organization-wide analytics</li>
+                        <li>Create global announcements when needed</li>
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <p className="font-medium">For Team Leaders:</p>
+                      <ul className="list-disc pl-5 space-y-1">
+                        <li>Manage team members and workload</li>
+                        <li>Create and assign tasks to your team</li>
+                        <li>Review EOD reports and provide feedback</li>
+                        <li>Track team performance metrics</li>
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <p className="font-medium">For Employees:</p>
+                      <ul className="list-disc pl-5 space-y-1">
+                        <li>Manage your assigned tasks</li>
+                        <li>Track your time and activities</li>
+                        <li>Submit detailed EOD reports</li>
+                        <li>Communicate with your team via Chat</li>
+                        <li>Use the AI Assistant for productivity help</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="p-4 border rounded-md">
+                  <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+                    <span className="bg-blue-100 dark:bg-blue-800 rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
+                    Leveraging AI Features
+                  </h3>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li><strong>AI Chat:</strong> Ask questions like "What should I prioritize today?" or "Summarize my team's progress"</li>
+                    <li><strong>EOD Helper:</strong> Use the "Generate EOD" button for AI-assisted report creation</li>
+                    <li><strong>Task Suggestions:</strong> Check the "Recommended Tasks" section for AI-generated suggestions</li>
+                    <li><strong>Analytics Insights:</strong> Look for AI insights marked with the "💡" icon in reports</li>
+                  </ul>
+                </div>
+                
+                <div className="p-4 border rounded-md">
+                  <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+                    <span className="bg-blue-100 dark:bg-blue-800 rounded-full w-6 h-6 flex items-center justify-center text-sm">5</span>
+                    Tips for Success
+                  </h3>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li><strong>Be Consistent:</strong> Submit EOD reports daily for the best AI insights</li>
+                    <li><strong>Update Tasks:</strong> Keep task statuses current for accurate tracking</li>
+                    <li><strong>Use the Calendar:</strong> Schedule your work to improve time management</li>
+                    <li><strong>Check Analytics:</strong> Review your performance data regularly</li>
+                    <li><strong>Ask the AI:</strong> The AI Assistant improves with use, so engage with it often</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="mt-8 flex justify-center">
+                <Button size="lg">
+                  Start Using TaskMate Now
                 </Button>
-              </CardFooter>
-            </Card>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Component className="h-5 w-5 text-taskmate-purple" />
-                    Core Modules
-                  </CardTitle>
-                  <CardDescription>Explore the key components of TaskMate</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    <ModuleListItem 
-                      icon={<LayoutDashboard className="h-5 w-5" />}
-                      title="Dashboard"
-                      description="Personalized overview for all user roles"
-                    />
-                    <ModuleListItem 
-                      icon={<List className="h-5 w-5" />}
-                      title="Tasks"
-                      description="Create, assign, track, and complete tasks"
-                    />
-                    <ModuleListItem 
-                      icon={<MessageSquare className="h-5 w-5" />}
-                      title="Chat"
-                      description="Real-time communication between team members"
-                    />
-                    <ModuleListItem 
-                      icon={<CalendarDays className="h-5 w-5" />}
-                      title="Calendar"
-                      description="Schedule management and time tracking"
-                    />
-                    <ModuleListItem 
-                      icon={<FileText className="h-5 w-5" />}
-                      title="EOD Reports"
-                      description="End-of-day submission and tracking"
-                    />
-                  </ul>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="ghost" size="sm" onClick={() => setActiveTab('modules')}>
-                    View All Modules
-                  </Button>
-                </CardFooter>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Users className="h-5 w-5 text-taskmate-purple" />
-                    User Roles
-                  </CardTitle>
-                  <CardDescription>Each role has tailored features and responsibilities</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    <RoleListItem 
-                      title="Super Admin"
-                      description="Organization-wide access and management"
-                      badge="Full Access"
-                    />
-                    <RoleListItem 
-                      title="Team Leader"
-                      description="Team management, task assignment, and reporting"
-                      badge="Team Management"
-                    />
-                    <RoleListItem 
-                      title="Employee"
-                      description="Task execution, reporting, and team collaboration"
-                      badge="Task Execution"
-                    />
-                  </ul>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="ghost" size="sm" onClick={() => setActiveTab('roles')}>
-                    View Role Details
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-          </TabsContent>
-
-          {/* Quick Start Tab */}
-          <TabsContent value="quickstart" className="space-y-6">
-            <Card>
-              <CardHeader className="bg-taskmate-purple/5">
-                <CardTitle className="flex items-center gap-2">
-                  <Play className="h-5 w-5 text-taskmate-purple" />
-                  Quick Start Guide
-                </CardTitle>
-                <CardDescription>
-                  Get up and running with TaskMate in minutes
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-6">
-                <div className="space-y-6">
-                  <QuickStartStep 
-                    number={1} 
-                    title="Log in to your account" 
-                    description="Use the credentials provided by your administrator to access the platform."
-                  />
-                  <QuickStartStep 
-                    number={2} 
-                    title="Explore your dashboard" 
-                    description="Familiarize yourself with your role-specific dashboard and its features."
-                  />
-                  <QuickStartStep 
-                    number={3} 
-                    title="Check your tasks" 
-                    description="Review assigned tasks, deadlines, and priorities from the Tasks module."
-                  />
-                  <QuickStartStep 
-                    number={4} 
-                    title="Set up your calendar" 
-                    description="View your schedule and upcoming deadlines in the Calendar module."
-                  />
-                  <QuickStartStep 
-                    number={5} 
-                    title="Submit your first EOD" 
-                    description="Complete your End-of-Day report to track your daily progress."
-                  />
-                </div>
-
-                <div className="mt-8 bg-muted p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">Pro Tips</h4>
-                  <ul className="list-disc list-inside space-y-2 text-sm text-muted-foreground">
-                    <li>Use the AI Assistant for quick help with tasks and questions</li>
-                    <li>Check your notifications regularly for important updates</li>
-                    <li>Customize your settings to match your preferences</li>
-                    <li>Communicate with your team via the Chat module for seamless collaboration</li>
-                    <li>Explore the Analytics section to track your performance metrics</li>
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <VideoTutorialCard 
-                title="Dashboard Walkthrough" 
-                description="Learn how to navigate your personalized dashboard"
-                duration="3:45"
-              />
-              <VideoTutorialCard 
-                title="Task Management" 
-                description="Create, assign, and track tasks efficiently"
-                duration="5:12"
-              />
-              <VideoTutorialCard 
-                title="EOD Submission" 
-                description="Submit detailed End-of-Day reports"
-                duration="2:30"
-              />
-            </div>
-          </TabsContent>
-
-          {/* Modules Tab */}
-          <TabsContent value="modules" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <ModuleCard 
-                icon={<LayoutDashboard className="h-6 w-6 text-taskmate-purple" />}
-                title="Dashboard"
-                description="Personalized overview of tasks, analytics, and activities"
-                features={[
-                  "Role-specific widgets and data visualization",
-                  "Quick access to key metrics and pending tasks",
-                  "AI-powered insights and recommendations",
-                  "Customizable layout and preferences"
-                ]}
-                roles={["Super Admin", "Team Leader", "Employee"]}
-                aiFeatures={["Performance predictions", "Productivity suggestions"]}
-              />
-
-              <ModuleCard 
-                icon={<List className="h-6 w-6 text-taskmate-purple" />}
-                title="Tasks"
-                description="Comprehensive task management system"
-                features={[
-                  "Create, assign, and track tasks",
-                  "Set priorities, deadlines, and dependencies",
-                  "Attach files and add comments",
-                  "Filter and sort by various parameters"
-                ]}
-                roles={["Super Admin", "Team Leader", "Employee"]}
-                aiFeatures={["Smart task assignments", "Deadline recommendations"]}
-              />
-
-              <ModuleCard 
-                icon={<MessageSquare className="h-6 w-6 text-taskmate-purple" />}
-                title="Chat"
-                description="Real-time communication between team members"
-                features={[
-                  "Direct messaging and group chats",
-                  "File sharing and media support",
-                  "Search functionality for past conversations",
-                  "Read receipts and typing indicators"
-                ]}
-                roles={["Super Admin", "Team Leader", "Employee"]}
-                aiFeatures={["Smart replies", "Message summarization"]}
-              />
-
-              <ModuleCard 
-                icon={<CalendarDays className="h-6 w-6 text-taskmate-purple" />}
-                title="Calendar"
-                description="Schedule management and time tracking"
-                features={[
-                  "View tasks and events in daily, weekly, or monthly format",
-                  "Set reminders and recurring events",
-                  "Track task deadlines and submissions",
-                  "Integrate with EOD reports"
-                ]}
-                roles={["Super Admin", "Team Leader", "Employee"]}
-                aiFeatures={["Optimal scheduling suggestions", "Workload balancing"]}
-              />
-
-              <ModuleCard 
-                icon={<FileText className="h-6 w-6 text-taskmate-purple" />}
-                title="EOD Reports"
-                description="End-of-day submission and tracking"
-                features={[
-                  "Submit daily progress reports",
-                  "Track time spent on tasks",
-                  "Attach files and evidence",
-                  "Receive AI feedback on productivity"
-                ]}
-                roles={["Team Leader", "Employee"]}
-                aiFeatures={["Performance analysis", "Next-day recommendations"]}
-              />
-
-              <ModuleCard 
-                icon={<Bell className="h-6 w-6 text-taskmate-purple" />}
-                title="Reminders"
-                description="Smart notification system for important deadlines"
-                features={[
-                  "Set custom reminders for tasks",
-                  "Schedule recurring notifications",
-                  "Prioritize important alerts",
-                  "Manage team-wide announcements"
-                ]}
-                roles={["Super Admin", "Team Leader"]}
-                aiFeatures={["Smart timing suggestions", "Priority detection"]}
-              />
-
-              <ModuleCard 
-                icon={<Users className="h-6 w-6 text-taskmate-purple" />}
-                title="Team Management"
-                description="Organize and manage team members"
-                features={[
-                  "Add and remove team members",
-                  "Assign roles and permissions",
-                  "Track performance and productivity",
-                  "Generate team reports"
-                ]}
-                roles={["Super Admin", "Team Leader"]}
-                aiFeatures={["Team composition optimization", "Performance patterns"]}
-              />
-
-              <ModuleCard 
-                icon={<Bot className="h-6 w-6 text-taskmate-purple" />}
-                title="AI Assistant"
-                description="Intelligent virtual assistant for various tasks"
-                features={[
-                  "Answer questions about the platform",
-                  "Generate content and suggestions",
-                  "Analyze data and provide insights",
-                  "Automate routine tasks"
-                ]}
-                roles={["Super Admin", "Team Leader", "Employee"]}
-                aiFeatures={["Natural language processing", "Contextual awareness"]}
-              />
-
-              <ModuleCard 
-                icon={<FileChart className="h-6 w-6 text-taskmate-purple" />}
-                title="Analytics"
-                description="Data visualization and performance metrics"
-                features={[
-                  "Track individual and team performance",
-                  "Analyze productivity trends",
-                  "Generate custom reports",
-                  "Identify areas for improvement"
-                ]}
-                roles={["Super Admin", "Team Leader"]}
-                aiFeatures={["Predictive analytics", "Performance forecasting"]}
-              />
-            </div>
-          </TabsContent>
-
-          {/* Roles Tab */}
-          <TabsContent value="roles" className="space-y-6">
-            <div className="grid grid-cols-1 gap-8">
-              <RoleCard 
-                title="Super Admin"
-                description="Organization-wide access and management capabilities"
-                responsibilities={[
-                  "Manage all teams and members across the organization",
-                  "Access comprehensive analytics and reports",
-                  "Configure system-wide settings and permissions",
-                  "Monitor overall performance and productivity"
-                ]}
-                accessibleModules={[
-                  {icon: <LayoutDashboard className="h-4 w-4" />, name: "Dashboard"},
-                  {icon: <List className="h-4 w-4" />, name: "Tasks"},
-                  {icon: <MessageSquare className="h-4 w-4" />, name: "Chat"},
-                  {icon: <CalendarDays className="h-4 w-4" />, name: "Calendar"},
-                  {icon: <Users className="h-4 w-4" />, name: "Teams"},
-                  {icon: <FileChart className="h-4 w-4" />, name: "Analytics"},
-                  {icon: <Settings className="h-4 w-4" />, name: "Settings"}
-                ]}
-                uniqueFeatures={[
-                  "Create and manage teams",
-                  "Access organization-wide analytics",
-                  "Configure system settings",
-                  "Manage role permissions"
-                ]}
-              />
-
-              <RoleCard 
-                title="Team Leader"
-                description="Team management, task assignment, and reporting capabilities"
-                responsibilities={[
-                  "Manage team members and their tasks",
-                  "Track team performance and productivity",
-                  "Set reminders and follow up on deadlines",
-                  "Review EOD reports and provide feedback"
-                ]}
-                accessibleModules={[
-                  {icon: <LayoutDashboard className="h-4 w-4" />, name: "Dashboard"},
-                  {icon: <List className="h-4 w-4" />, name: "Tasks"},
-                  {icon: <MessageSquare className="h-4 w-4" />, name: "Chat"},
-                  {icon: <CalendarDays className="h-4 w-4" />, name: "Calendar"},
-                  {icon: <Users className="h-4 w-4" />, name: "Team Members"},
-                  {icon: <Bell className="h-4 w-4" />, name: "Reminders"},
-                  {icon: <Settings className="h-4 w-4" />, name: "Settings"}
-                ]}
-                uniqueFeatures={[
-                  "Team member management",
-                  "Task assignment and tracking",
-                  "Setting reminders for the team",
-                  "EOD report reviews"
-                ]}
-              />
-
-              <RoleCard 
-                title="Employee"
-                description="Task execution, reporting, and team collaboration capabilities"
-                responsibilities={[
-                  "Complete assigned tasks within deadlines",
-                  "Submit daily EOD reports",
-                  "Collaborate with team members",
-                  "Track personal productivity"
-                ]}
-                accessibleModules={[
-                  {icon: <LayoutDashboard className="h-4 w-4" />, name: "Dashboard"},
-                  {icon: <List className="h-4 w-4" />, name: "Tasks"},
-                  {icon: <MessageSquare className="h-4 w-4" />, name: "Chat"},
-                  {icon: <CalendarDays className="h-4 w-4" />, name: "Calendar"},
-                  {icon: <FileText className="h-4 w-4" />, name: "EOD"},
-                  {icon: <Bot className="h-4 w-4" />, name: "AI Assistant"},
-                  {icon: <Settings className="h-4 w-4" />, name: "Settings"}
-                ]}
-                uniqueFeatures={[
-                  "EOD submission",
-                  "AI Assistant for task help",
-                  "Personal productivity tracking",
-                  "File attachments for task evidence"
-                ]}
-              />
-            </div>
-          </TabsContent>
-
-          {/* AI Features Tab */}
-          <TabsContent value="ai" className="space-y-6">
-            <Card className="border-taskmate-purple/20">
-              <CardHeader className="bg-taskmate-purple/5">
-                <CardTitle className="flex items-center gap-2">
-                  <Brain className="h-5 w-5 text-taskmate-purple" />
-                  AI-Powered Features
-                </CardTitle>
-                <CardDescription>
-                  How artificial intelligence enhances TaskMate functionality
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-6">
-                <p className="mb-6">
-                  TaskMate leverages the Gemini API and other AI technologies to provide intelligent features
-                  that enhance productivity, automate routine tasks, and provide valuable insights.
-                </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <AIFeatureCard 
-                    icon={<Lightbulb className="h-6 w-6 text-amber-500" />}
-                    title="Smart Task Recommendations"
-                    description="AI analyzes work patterns and suggests optimal task assignments based on team member strengths and availability."
-                    modules={["Tasks", "Dashboard"]}
-                  />
-                  
-                  <AIFeatureCard 
-                    icon={<FileText className="h-6 w-6 text-blue-500" />}
-                    title="EOD Report Analysis"
-                    description="Automatic analysis of submitted EOD reports with personalized feedback and next-day suggestions."
-                    modules={["EOD", "Calendar"]}
-                  />
-                  
-                  <AIFeatureCard 
-                    icon={<CalendarDays className="h-6 w-6 text-green-500" />}
-                    title="Intelligent Scheduling"
-                    description="Optimizes task scheduling by analyzing deadlines, priorities, and team workload to prevent bottlenecks."
-                    modules={["Calendar", "Tasks"]}
-                  />
-                  
-                  <AIFeatureCard 
-                    icon={<Bot className="h-6 w-6 text-purple-500" />}
-                    title="AI Assistant"
-                    description="Virtual assistant that answers questions, provides guidance, and automates routine tasks."
-                    modules={["AI Assistant", "Chat"]}
-                  />
-                  
-                  <AIFeatureCard 
-                    icon={<FileChart className="h-6 w-6 text-red-500" />}
-                    title="Predictive Analytics"
-                    description="Forecasts team performance trends and identifies potential issues before they arise."
-                    modules={["Analytics", "Dashboard"]}
-                  />
-                  
-                  <AIFeatureCard 
-                    icon={<Bell className="h-6 w-6 text-orange-500" />}
-                    title="Smart Reminders"
-                    description="Automatically generates reminders based on task importance, deadlines, and user behavior patterns."
-                    modules={["Reminders", "Calendar"]}
-                  />
-                </div>
-
-                <div className="mt-8 bg-muted p-4 rounded-lg">
-                  <h4 className="font-medium mb-2 flex items-center gap-2">
-                    <Brain className="h-5 w-5 text-taskmate-purple" />
-                    How AI Works in TaskMate
-                  </h4>
-                  <p className="text-muted-foreground mb-4">
-                    TaskMate's AI capabilities are powered by the Gemini API, which processes data, learns from user 
-                    interactions, and provides intelligent recommendations and automations.
-                  </p>
-                  <img 
-                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
-                    alt="AI Workflow" 
-                    className="w-full h-auto rounded-lg border border-border"
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
+              </div>
+            </TabsContent>
+          </ScrollArea>
         </Tabs>
       </div>
     </AppLayout>
   );
 };
-
-// Helper components
-const FeatureCard = ({ icon, title, description }) => {
-  return (
-    <div className="p-4 border rounded-lg bg-card">
-      <div className="flex items-center gap-3 mb-2">
-        {icon}
-        <h3 className="font-medium">{title}</h3>
-      </div>
-      <p className="text-sm text-muted-foreground">{description}</p>
-    </div>
-  );
-};
-
-const ModuleListItem = ({ icon, title, description }) => {
-  return (
-    <li className="flex items-start gap-3">
-      <div className="mt-0.5 bg-muted rounded-md p-1.5">
-        {icon}
-      </div>
-      <div>
-        <h4 className="font-medium">{title}</h4>
-        <p className="text-sm text-muted-foreground">{description}</p>
-      </div>
-    </li>
-  );
-};
-
-const RoleListItem = ({ title, description, badge }) => {
-  return (
-    <li className="flex items-start justify-between gap-3">
-      <div>
-        <h4 className="font-medium">{title}</h4>
-        <p className="text-sm text-muted-foreground">{description}</p>
-      </div>
-      <Badge variant="outline" className="bg-taskmate-purple/5 text-taskmate-purple border-taskmate-purple/20">
-        {badge}
-      </Badge>
-    </li>
-  );
-};
-
-const QuickStartStep = ({ number, title, description }) => {
-  return (
-    <div className="flex items-start gap-4">
-      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-taskmate-purple/10 text-taskmate-purple flex items-center justify-center font-medium">
-        {number}
-      </div>
-      <div>
-        <h4 className="font-medium">{title}</h4>
-        <p className="text-sm text-muted-foreground">{description}</p>
-      </div>
-    </div>
-  );
-};
-
-const VideoTutorialCard = ({ title, description, duration }) => {
-  return (
-    <div className="border rounded-lg overflow-hidden group cursor-pointer">
-      <div className="h-32 bg-muted relative flex items-center justify-center">
-        <Play className="h-10 w-10 text-white bg-taskmate-purple/80 p-2 rounded-full transition-transform group-hover:scale-110" />
-        <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-          {duration}
-        </div>
-      </div>
-      <div className="p-3">
-        <h4 className="font-medium">{title}</h4>
-        <p className="text-xs text-muted-foreground">{description}</p>
-      </div>
-    </div>
-  );
-};
-
-const ModuleCard = ({ icon, title, description, features, roles, aiFeatures }) => {
-  return (
-    <Collapsible className="border rounded-lg overflow-hidden">
-      <CollapsibleTrigger className="flex items-center justify-between w-full p-4 text-left bg-card hover:bg-muted/50">
-        <div className="flex items-center gap-3">
-          {icon}
-          <div>
-            <h3 className="font-medium">{title}</h3>
-            <p className="text-sm text-muted-foreground">{description}</p>
-          </div>
-        </div>
-      </CollapsibleTrigger>
-      <CollapsibleContent className="p-4 pt-0 border-t">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <div>
-            <h4 className="font-medium mb-2">Key Features</h4>
-            <ul className="space-y-1">
-              {features.map((feature, index) => (
-                <li key={index} className="text-sm flex items-start gap-2">
-                  <span className="text-taskmate-purple mt-0.5">•</span>
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">Available For</h4>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {roles.map((role, index) => (
-                <Badge key={index} variant="outline" className="bg-taskmate-purple/5">
-                  {role}
-                </Badge>
-              ))}
-            </div>
-
-            {aiFeatures && aiFeatures.length > 0 && (
-              <>
-                <h4 className="font-medium mb-2">AI Features</h4>
-                <ul className="space-y-1">
-                  {aiFeatures.map((feature, index) => (
-                    <li key={index} className="text-sm flex items-start gap-2">
-                      <Brain className="h-3.5 w-3.5 text-taskmate-purple mt-0.5" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
-          </div>
-        </div>
-      </CollapsibleContent>
-    </Collapsible>
-  );
-};
-
-const RoleCard = ({ title, description, responsibilities, accessibleModules, uniqueFeatures }) => {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div>
-            <h4 className="font-medium mb-3">Responsibilities</h4>
-            <ul className="space-y-2">
-              {responsibilities.map((responsibility, index) => (
-                <li key={index} className="text-sm flex items-start gap-2">
-                  <span className="text-taskmate-purple mt-0.5">•</span>
-                  <span>{responsibility}</span>
-                </li>
-              ))}
-            </ul>
-            
-            <h4 className="font-medium mb-3 mt-6">Unique Features</h4>
-            <ul className="space-y-2">
-              {uniqueFeatures.map((feature, index) => (
-                <li key={index} className="text-sm flex items-start gap-2">
-                  <Lightbulb className="h-3.5 w-3.5 text-amber-500 mt-0.5" />
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="font-medium mb-3">Accessible Modules</h4>
-            <div className="grid grid-cols-2 gap-3">
-              {accessibleModules.map((module, index) => (
-                <div key={index} className="flex items-center gap-2 text-sm bg-muted p-2 rounded-md">
-                  {module.icon}
-                  <span>{module.name}</span>
-                </div>
-              ))}
-            </div>
-            
-            <div className="mt-6 bg-muted p-4 rounded-lg">
-              <h4 className="font-medium mb-2">Typical Workflow</h4>
-              <p className="text-sm text-muted-foreground mb-2">
-                A visualization of how {title}s typically interact with the TaskMate platform.
-              </p>
-              <div className="h-32 bg-card rounded-md border flex items-center justify-center text-sm text-muted-foreground">
-                Workflow diagram (placeholder)
-              </div>
-            </div>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
-
-const AIFeatureCard = ({ icon, title, description, modules }) => {
-  return (
-    <Card className="border-taskmate-purple/10">
-      <CardHeader className="pb-2">
-        <div className="flex items-start gap-3">
-          {icon}
-          <div>
-            <CardTitle className="text-lg">{title}</CardTitle>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <p className="text-sm text-muted-foreground mb-3">{description}</p>
-        <div className="flex flex-wrap gap-2">
-          {modules.map((module, index) => (
-            <Badge key={index} variant="outline" className="bg-muted">
-              {module}
-            </Badge>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
-
-// Helper component for NavigationMenu links
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  );
-});
-ListItem.displayName = "ListItem";
-
-// Missing import for Settings
-const Settings = ({ className, ...props }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-    {...props}
-  >
-    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
-    <circle cx="12" cy="12" r="3"></circle>
-  </svg>
-);
 
 export default KnowledgeHub;
