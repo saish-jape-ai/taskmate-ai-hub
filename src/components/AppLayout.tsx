@@ -38,18 +38,25 @@ const AppLayout = ({ children, title }: AppLayoutProps) => {
             <div className="font-semibold text-xl">{title}</div>
             <div className="flex items-center gap-3">
               <SidebarTrigger />
-              <Avatar>
-                {currentUser.avatar ? (
-                  <AvatarImage src={currentUser.avatar} alt={currentUser.name} />
-                ) : (
-                  <AvatarFallback>{userInitials}</AvatarFallback>
-                )}
-              </Avatar>
-              <div className="hidden md:block">
-                <div className="text-sm font-medium">{currentUser.name}</div>
-                <div className="text-xs text-muted-foreground capitalize">{currentUser.role.replace('_', ' ')}</div>
-                {/* Branding text removed to avoid repeating "TaskMate" too much */}
-              </div>
+              {currentUser && (
+                <div className={`px-4 py-3 `}>
+                  <div className="flex items-center gap-3">
+                    <Avatar>
+                      <AvatarImage
+                        src={currentUser.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name)}&background=9b87f5&color=fff`}
+                        alt={currentUser.name}
+                      />
+                      <AvatarFallback>{currentUser.name.charAt(0)}</AvatarFallback>
+                    </Avatar>
+
+                    <div>
+                      <p className="font-medium text-sm">{currentUser.name}</p>
+                      <p className="text-xs text-muted-foreground capitalize">{currentUser.role.replace('_', ' ')}</p>
+                    </div>
+
+                  </div>
+                </div>
+              )}
             </div>
           </header>
           <main className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-950 p-6">{children}</main>
