@@ -1,3 +1,4 @@
+
 import {
   Sidebar,
   SidebarContent,
@@ -29,6 +30,7 @@ export function AppSidebar() {
     navigate("/");
   };
 
+  // Base menu items that all users see
   const sidebarMenu = [
     { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
     { title: "Tasks", url: "/tasks", icon: List },
@@ -36,11 +38,12 @@ export function AppSidebar() {
     { title: "Analytics", url: "/analytics", icon: Grid2x2 }
   ];
 
-  // Role-specific items
+  // Role-specific items - Remove Team Leader option from sidebar as requested
   if (currentUser?.role === "super_admin") {
     sidebarMenu.push({ title: "Teams", url: "/teams", icon: Users });
   }
   
+  // Now team_leader doesn't appear in the sidebar title
   if (currentUser?.role === "team_leader") {
     sidebarMenu.push({ title: "Team Members", url: "/team-members", icon: Users });
     sidebarMenu.push({ title: "Reminders", url: "/reminders", icon: Bell });
@@ -54,7 +57,7 @@ export function AppSidebar() {
   return (
     <Sidebar className={`border-r border-border bg-white dark:bg-sidebar-background transition-all duration-200 ${isCollapsed ? 'w-[60px]' : ''}`}>
       <SidebarHeader>
-        <div className="flex items-center gap-2 pl-4 pt-4 pb-2">
+        <div className={`flex items-center ${isCollapsed ? 'justify-center' : ''} gap-2 pl-4 pt-4 pb-2`}>
           <span className="bg-taskmate-purple/10 p-2 rounded-lg">
             <LayoutDashboard className="h-6 w-6 text-taskmate-purple" />
           </span>
@@ -69,7 +72,7 @@ export function AppSidebar() {
       <SidebarSeparator />
       
       {currentUser && (
-        <div className="px-4 py-3">
+        <div className={`px-4 py-3 ${isCollapsed ? 'flex justify-center' : ''}`}>
           <div className="flex items-center gap-3">
             <Avatar>
               <AvatarImage 

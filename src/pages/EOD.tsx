@@ -1,13 +1,20 @@
 
 import AppLayout from "@/components/AppLayout";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "@/hooks/use-toast";
-import { FileText, Sparkles, Send } from "lucide-react";
+import { FileText, Sparkles, Send, Upload, X, Paperclip, File } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+
+interface Attachment {
+  name: string;
+  type: string;
+  size: number;
+  url: string;
+}
 
 const EOD = () => {
   const { currentUser } = useAuth();
@@ -15,6 +22,8 @@ const EOD = () => {
   const [loading, setLoading] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [todayActivities, setTodayActivities] = useState("");
+  const [attachments, setAttachments] = useState<Attachment[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,6 +37,7 @@ const EOD = () => {
         description: "Your End Of Day update has been sent to your manager." 
       });
       setTodayActivities("");
+      setAttachments([]);
     }, 800);
   };
 
@@ -63,6 +73,47 @@ ${todayActivities.split('\n').map(activity => `- ${activity}`).join('\n')}
       setEod(generatedEOD);
       setGenerating(false);
     }, 1500);
+  };
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    
+    const newAttachments: Attachment[] = [];
+    
+    Array.from(e.target.files).forEach(file => {
+      // Create object URL for preview
+      const url = URL.createObjectURL(file);
+      
+      newAttachments.push({
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        url
+      });
+    });
+    
+    setAttachments([...attachments, ...newAttachments]);
+    
+    // Reset file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+  
+  const removeAttachment = (index: number) => {
+    const newAttachments = [...attachments];
+    
+    // Revoke object URL to avoid memory leaks
+    URL.revokeObjectURL(newAttachments[index].url);
+    
+    newAttachments.splice(index, 1);
+    setAttachments(newAttachments);
+  };
+  
+  const getFileSizeDisplay = (bytes: number): string => {
+    if (bytes < 1024) return bytes + ' B';
+    else if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB';
+    else return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
   };
 
   return (
@@ -115,6 +166,67 @@ ${todayActivities.split('\n').map(activity => `- ${activity}`).join('\n')}
                 className="min-h-[200px]"
               />
             </div>
+            
+            {/* File attachments section */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <label className="block font-semibold">Attachments</label>
+                <Button 
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <Paperclip className="mr-2 h-4 w-4" />
+                  Add Files
+                </Button>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileUpload}
+                  className="hidden"
+                  multiple
+                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt,.xls,.xlsx"
+                />
+              </div>
+              
+              {attachments.length > 0 ? (
+                <div className="space-y-2 p-4 border rounded-md bg-gray-50 dark:bg-gray-900">
+                  {attachments.map((file, index) => (
+                    <div key={index} className="flex items-center justify-between p-2 bg-white dark:bg-gray-800 rounded border">
+                      <div className="flex items-center space-x-3">
+                        <File className="h-5 w-5 text-taskmate-purple" />
+                        <div>
+                          <p className="text-sm font-medium truncate max-w-xs">{file.name}</p>
+                          <p className="text-xs text-muted-foreground">{getFileSizeDisplay(file.size)}</p>
+                        </div>
+                      </div>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 w-8 p-0"
+                        onClick={() => removeAttachment(index)}
+                      >
+                        <X className="h-4 w-4" />
+                        <span className="sr-only">Remove</span>
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="border border-dashed rounded-md p-6 text-center">
+                  <Upload className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
+                  <p className="text-sm text-muted-foreground">
+                    Drag and drop files here or click "Add Files" to attach supporting documents
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Supported formats: PDF, Word, Excel, Images
+                  </p>
+                </div>
+              )}
+            </div>
+            
             <Button
               type="submit"
               className="w-full bg-taskmate-purple hover:bg-taskmate-purple/90"
