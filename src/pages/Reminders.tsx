@@ -4,6 +4,7 @@ import AppLayout from '@/components/AppLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 import { Bell, Plus, Search } from 'lucide-react';
 import {
   DropdownMenu,
@@ -11,9 +12,18 @@ import {
   DropdownMenuTrigger,
   DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
 
 const Reminders = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const { toast } = useToast();
 
   // Mockup data - in a real app this would come from an API
   const reminders = [
@@ -32,6 +42,18 @@ const Reminders = () => {
       timestamp: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
     },
   ];
+
+  const handleDelete = (id: number) => {
+    toast({
+      title: "Reminder deleted",
+      description: "The reminder has been successfully deleted.",
+    });
+  };
+
+  const filteredReminders = reminders.filter(reminder => 
+    reminder.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    reminder.recipient.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <AppLayout title="Reminders">
@@ -55,15 +77,28 @@ const Reminders = () => {
                 className="pl-9"
               />
             </div>
-            <Button>
-              <Plus className="h-4 w-4 mr-2" />
-              New Reminder
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button>
+                  <Plus className="h-4 w-4 mr-2" />
+                  New Reminder
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Create New Reminder</DialogTitle>
+                </DialogHeader>
+                {/* Add reminder form here in next iteration */}
+                <div className="p-4">
+                  <p className="text-muted-foreground">Reminder creation form coming soon...</p>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
 
         <div className="grid gap-4">
-          {reminders.map((reminder) => (
+          {filteredReminders.map((reminder) => (
             <Card key={reminder.id}>
               <CardHeader className="p-4">
                 <div className="flex items-center justify-between">
@@ -77,18 +112,21 @@ const Reminders = () => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       <DropdownMenuItem>Edit</DropdownMenuItem>
-                      <DropdownMenuItem className="text-red-600">Delete</DropdownMenuItem>
+                      <DropdownMenuItem 
+                        className="text-red-600"
+                        onClick={() => handleDelete(reminder.id)}
+                      >
+                        Delete
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
               </CardHeader>
               <CardContent className="p-4 pt-0">
                 <div className="flex items-center justify-between text-sm">
-                  <span className={`capitalize ${
-                    reminder.status === 'sent' ? 'text-green-600' : 'text-orange-600'
-                  }`}>
+                  <Badge variant={reminder.status === 'sent' ? 'default' : 'secondary'} className="capitalize">
                     {reminder.status}
-                  </span>
+                  </Badge>
                   <span className="text-muted-foreground">
                     {new Date(reminder.timestamp).toLocaleString()}
                   </span>
@@ -97,7 +135,7 @@ const Reminders = () => {
             </Card>
           ))}
           
-          {reminders.length === 0 && (
+          {filteredReminders.length === 0 && (
             <div className="text-center py-12">
               <Bell className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-lg font-medium">No reminders found</h3>
