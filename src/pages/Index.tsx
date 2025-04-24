@@ -1,8 +1,19 @@
-
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { AreaChart, Users, Settings, Info, Check, ArrowRight, BarChart, MessageSquare, FileText, Calendar } from 'lucide-react';
+import { 
+  AreaChart, 
+  Users, 
+  Settings, 
+  Info, 
+  Check, 
+  ArrowRight, 
+  BarChart, 
+  MessageSquare, 
+  FileText, 
+  Calendar, 
+  Book 
+} from 'lucide-react';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -26,6 +37,10 @@ const Index = () => {
             </Button>
             <Button variant="ghost" onClick={() => document.getElementById('workflow')?.scrollIntoView({behavior: 'smooth'})}>
               Workflow
+            </Button>
+            <Button variant="ghost" as={Link} to="/knowledge-hub">
+              <Book className="h-4 w-4 mr-2" />
+              Project Guide
             </Button>
             <Button onClick={() => navigate('/login')} className="bg-taskmate-purple hover:bg-taskmate-purple/90">
               Sign In
@@ -166,7 +181,7 @@ const Index = () => {
                 </li>
               </ul>
               <img 
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
+                src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
                 alt="Team management" 
                 className="w-full h-40 object-cover rounded-lg mt-4"
               />
