@@ -13,7 +13,7 @@ import {
   SidebarSeparator
 } from "@/components/ui/sidebar";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Users, LayoutDashboard, Settings, MessageSquare, List, Grid2x2, LogOut, FileText, Bell, Bot, PanelLeftClose, CalendarDays, Book } from "lucide-react";
+import { Users, LayoutDashboard, Settings, MessageSquare, List, Grid2x2, LogOut, FileText, Bell, Bot, PanelLeftClose, CalendarDays } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "./ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
@@ -36,8 +36,7 @@ export function AppSidebar() {
     { title: "Tasks", url: "/tasks", icon: List },
     { title: "Chat", url: "/chat", icon: MessageSquare },
     { title: "Calendar", url: "/calendar", icon: CalendarDays },
-    { title: "Analytics", url: "/analytics", icon: Grid2x2 },
-    { title: "Project Overview", url: "/knowledge-hub", icon: Book }
+    { title: "Analytics", url: "/analytics", icon: Grid2x2 }
   ];
 
   // Role-specific items - Remove Team Leader option from sidebar as requested
