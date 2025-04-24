@@ -95,55 +95,55 @@
   }
 
   /* Custom styles for TaskMate */
-  .taskmate-card {
+  .bloom-card {
     @apply bg-white dark:bg-card rounded-xl shadow-md border border-border p-6;
   }
 
-  .taskmate-dashboard-grid {
+  .bloom-dashboard-grid {
     @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6;
   }
 
-  .taskmate-metric-card {
+  .bloom-metric-card {
     @apply flex flex-col p-6 bg-white dark:bg-card rounded-xl shadow-sm border border-border;
   }
 
-  .taskmate-sidebar-link {
+  .bloom-sidebar-link {
     @apply flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-taskmate-purple/10 hover:text-taskmate-purple dark:hover:bg-taskmate-purple/20;
   }
 
-  .taskmate-sidebar-link.active {
+  .bloom-sidebar-link.active {
     @apply bg-taskmate-purple/10 text-taskmate-purple font-medium dark:bg-taskmate-purple/20;
   }
 
-  .taskmate-chat-bubble {
+  .bloom-chat-bubble {
     @apply rounded-2xl px-4 py-2 max-w-[80%];
   }
 
-  .taskmate-chat-bubble-sender {
-    @apply taskmate-chat-bubble bg-taskmate-purple text-white self-end;
+  .bloom-chat-bubble-sender {
+    @apply bloom-chat-bubble bg-taskmate-purple text-white self-end;
   }
 
-  .taskmate-chat-bubble-receiver {
-    @apply taskmate-chat-bubble bg-muted dark:bg-muted self-start;
+  .bloom-chat-bubble-receiver {
+    @apply bloom-chat-bubble bg-muted dark:bg-muted self-start;
   }
 
-  .taskmate-task-card {
+  .bloom-task-card {
     @apply flex flex-col p-4 bg-white dark:bg-card rounded-xl shadow-sm border border-border hover:shadow-md transition-shadow;
   }
 
-  .taskmate-status-badge {
+  .bloom-status-badge {
     @apply text-xs font-medium px-2 py-1 rounded-full;
   }
 
-  .taskmate-status-pending {
-    @apply taskmate-status-badge bg-taskmate-blue text-blue-700 dark:bg-blue-900/30 dark:text-blue-300;
+  .bloom-status-pending {
+    @apply bloom-status-badge bg-taskmate-blue text-blue-700 dark:bg-blue-900/30 dark:text-blue-300;
   }
 
-  .taskmate-status-completed {
-    @apply taskmate-status-badge bg-taskmate-green text-green-700 dark:bg-green-900/30 dark:text-green-300;
+  .bloom-status-completed {
+    @apply bloom-status-badge bg-taskmate-green text-green-700 dark:bg-green-900/30 dark:text-green-300;
   }
 
-  .taskmate-status-overdue {
-    @apply taskmate-status-badge bg-taskmate-orange text-orange-700 dark:bg-orange-900/30 dark:text-orange-300;
+  .bloom-status-overdue {
+    @apply bloom-status-badge bg-taskmate-orange text-orange-700 dark:bg-orange-900/30 dark:text-orange-300;
   }
 }

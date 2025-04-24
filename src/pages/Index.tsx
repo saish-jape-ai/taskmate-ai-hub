@@ -1,7 +1,8 @@
+
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { AreaChart, Users, Settings, Info, Check, ArrowRight, BarChart, MessageSquare, FileText, Calendar, BrainCircuit, Bot, Sparkles, Zap, Bell } from 'lucide-react';
+import { AreaChart, Users, Settings, Info, Check, ArrowRight, BarChart, MessageSquare, FileText, Calendar } from 'lucide-react';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -16,25 +17,20 @@ const Index = () => {
       <header className="fixed top-0 left-0 right-0 bg-white/90 dark:bg-gray-900/90 shadow-sm backdrop-blur-sm z-10 border-b border-gray-200 dark:border-gray-800">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="bg-taskmate-purple/10 p-2 rounded-lg">
-              <AreaChart className="h-6 w-6 text-taskmate-purple" />
-            </div>
+            <AreaChart className="h-8 w-8 text-taskmate-purple" />
             <span className="text-2xl font-bold">TaskMate</span>
           </div>
-          <div className="hidden md:flex items-center gap-4">
+          <div className="flex items-center gap-4">
             <Button variant="ghost" onClick={() => document.getElementById('features')?.scrollIntoView({behavior: 'smooth'})}>
               Features
-            </Button>
-            <Button variant="ghost" onClick={() => document.getElementById('ai-features')?.scrollIntoView({behavior: 'smooth'})}>
-              AI Features
             </Button>
             <Button variant="ghost" onClick={() => document.getElementById('workflow')?.scrollIntoView({behavior: 'smooth'})}>
               Workflow
             </Button>
+            <Button onClick={() => navigate('/login')} className="bg-taskmate-purple hover:bg-taskmate-purple/90">
+              Sign In
+            </Button>
           </div>
-          <Button onClick={() => navigate('/login')} className="bg-taskmate-purple hover:bg-taskmate-purple/90 text-white">
-            Sign In
-          </Button>
         </div>
       </header>
       
@@ -50,117 +46,20 @@ const Index = () => {
               Optimize productivity with intelligent task management, AI-driven analytics, and robust communication tools.
             </p>
             <div className="flex gap-4 pt-4">
-              <Button size="lg" className="bg-taskmate-purple hover:bg-taskmate-purple/90 text-white" onClick={() => navigate('/login')}>
+              <Button size="lg" className="bg-taskmate-purple hover:bg-taskmate-purple/90" onClick={() => navigate('/login')}>
                 Get Started <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-              <Button size="lg" variant="outline" className="border-taskmate-purple/30 text-taskmate-purple hover:bg-taskmate-purple/10">
+              <Button size="lg" variant="outline">
                 Learn More
               </Button>
             </div>
           </div>
           <div className="md:w-1/2">
             <img 
-              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80" 
+              src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80" 
               alt="Person using TaskMate dashboard" 
-              className="rounded-xl shadow-lg w-full max-w-lg mx-auto border-4 border-white"
+              className="rounded-xl shadow-lg w-full max-w-lg mx-auto"
             />
-          </div>
-        </section>
-        
-        {/* AI Features section */}
-        <section id="ai-features" className="py-10">
-          <div className="text-center mb-12">
-            <div className="bg-taskmate-purple/10 w-fit mx-auto px-4 py-1 rounded-full mb-2">
-              <span className="text-sm text-taskmate-purple font-medium">Powered by AI</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold">Where AI is Used</h2>
-            <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-              TaskMate leverages the latest in artificial intelligence to transform how teams work and collaborate
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="p-6 rounded-xl bg-white dark:bg-gray-800 shadow-md border border-gray-100 dark:border-gray-700 transition-all hover:shadow-lg hover:scale-105">
-              <div className="h-12 w-12 rounded-full bg-taskmate-purple/20 flex items-center justify-center mb-4">
-                <BrainCircuit className="h-6 w-6 text-taskmate-purple" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Task Generation</h3>
-              <p className="text-muted-foreground">AI intelligently creates and assigns tasks based on team members' skills and workload.</p>
-            </div>
-            
-            <div className="p-6 rounded-xl bg-white dark:bg-gray-800 shadow-md border border-gray-100 dark:border-gray-700 transition-all hover:shadow-lg hover:scale-105">
-              <div className="h-12 w-12 rounded-full bg-taskmate-purple/20 flex items-center justify-center mb-4">
-                <MessageSquare className="h-6 w-6 text-taskmate-purple" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Task Clarification</h3>
-              <p className="text-muted-foreground">Get AI assistance to clarify task requirements, suggest approaches, and answer questions.</p>
-            </div>
-            
-            <div className="p-6 rounded-xl bg-white dark:bg-gray-800 shadow-md border border-gray-100 dark:border-gray-700 transition-all hover:shadow-lg hover:scale-105">
-              <div className="h-12 w-12 rounded-full bg-taskmate-purple/20 flex items-center justify-center mb-4">
-                <BarChart className="h-6 w-6 text-taskmate-purple" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Performance Analytics</h3>
-              <p className="text-muted-foreground">Advanced AI analytics identify trends, strengths, and areas for improvement in team performance.</p>
-            </div>
-            
-            <div className="p-6 rounded-xl bg-white dark:bg-gray-800 shadow-md border border-gray-100 dark:border-gray-700 transition-all hover:shadow-lg hover:scale-105">
-              <div className="h-12 w-12 rounded-full bg-taskmate-purple/20 flex items-center justify-center mb-4">
-                <Bell className="h-6 w-6 text-taskmate-purple" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Smart Reminders</h3>
-              <p className="text-muted-foreground">AI determines the optimal time to send reminders based on team member productivity patterns.</p>
-            </div>
-            
-            <div className="p-6 rounded-xl bg-white dark:bg-gray-800 shadow-md border border-gray-100 dark:border-gray-700 transition-all hover:shadow-lg hover:scale-105">
-              <div className="h-12 w-12 rounded-full bg-taskmate-purple/20 flex items-center justify-center mb-4">
-                <Sparkles className="h-6 w-6 text-taskmate-purple" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Growth Suggestions</h3>
-              <p className="text-muted-foreground">Personalized recommendations for skill development based on performance and task history.</p>
-            </div>
-            
-            <div className="p-6 rounded-xl bg-white dark:bg-gray-800 shadow-md border border-gray-100 dark:border-gray-700 transition-all hover:shadow-lg hover:scale-105">
-              <div className="h-12 w-12 rounded-full bg-taskmate-purple/20 flex items-center justify-center mb-4">
-                <Bot className="h-6 w-6 text-taskmate-purple" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">AI Assistant</h3>
-              <p className="text-muted-foreground">Personal AI assistant helps with daily tasks, answers questions, and provides guidance.</p>
-            </div>
-          </div>
-          
-          <div className="mt-12 p-8 bg-taskmate-purple/10 rounded-2xl max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-6 items-center">
-              <div className="md:w-1/3">
-                <img 
-                  src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=4896&q=80" 
-                  alt="AI Assistant" 
-                  className="rounded-lg shadow-md w-full"
-                />
-              </div>
-              <div className="md:w-2/3">
-                <h3 className="text-2xl font-bold mb-4">Your Personal AI Assistant</h3>
-                <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-taskmate-purple/20 mb-4">
-                  <p className="italic text-muted-foreground">
-                    "Hey AI, help me manage my awesome team today ❤️"
-                  </p>
-                </div>
-                <div className="space-y-3">
-                  <div className="flex items-start gap-2">
-                    <Zap className="h-5 w-5 text-taskmate-purple mt-0.5" />
-                    <p>Get updates on team members' progress</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Zap className="h-5 w-5 text-taskmate-purple mt-0.5" />
-                    <p>Send reminders to submit EOD reports</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Zap className="h-5 w-5 text-taskmate-purple mt-0.5" />
-                    <p>Generate AI-powered task suggestions</p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </section>
         
@@ -267,7 +166,7 @@ const Index = () => {
                 </li>
               </ul>
               <img 
-                src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
+                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
                 alt="Team management" 
                 className="w-full h-40 object-cover rounded-lg mt-4"
               />
@@ -317,7 +216,7 @@ const Index = () => {
                 <img 
                   src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
                   alt="Task management" 
-                  className="rounded-xl shadow-md w-full border-4 border-white"
+                  className="rounded-xl shadow-md w-full"
                 />
               </div>
             </div>
@@ -333,7 +232,7 @@ const Index = () => {
                 <img 
                   src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
                   alt="Team communication" 
-                  className="rounded-xl shadow-md w-full border-4 border-white"
+                  className="rounded-xl shadow-md w-full"
                 />
               </div>
             </div>
@@ -349,7 +248,7 @@ const Index = () => {
                 <img 
                   src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
                   alt="Performance analytics" 
-                  className="rounded-xl shadow-md w-full border-4 border-white"
+                  className="rounded-xl shadow-md w-full"
                 />
               </div>
             </div>
@@ -363,45 +262,9 @@ const Index = () => {
             <p className="text-xl text-muted-foreground mb-6 max-w-2xl mx-auto">
               Join thousands of teams that use TaskMate to streamline their workflows and improve collaboration.
             </p>
-            <Button size="lg" className="bg-taskmate-purple hover:bg-taskmate-purple/90 text-white" onClick={() => navigate('/login')}>
+            <Button size="lg" className="bg-taskmate-purple hover:bg-taskmate-purple/90" onClick={() => navigate('/login')}>
               Get Started Now <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-          </div>
-        </section>
-
-        {/* Upcoming AI Features */}
-        <section className="py-10">
-          <div className="text-center mb-12">
-            <div className="bg-taskmate-purple/10 w-fit mx-auto px-4 py-1 rounded-full mb-2">
-              <span className="text-sm text-taskmate-purple font-medium">Coming Soon</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold">Upcoming AI Features</h2>
-            <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-              We're constantly innovating to bring you the latest AI advancements for team management
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md border border-dashed border-taskmate-purple/40">
-              <h3 className="text-xl font-bold mb-3 text-taskmate-purple">AI Meeting Summarization</h3>
-              <p className="text-muted-foreground">
-                Let AI automatically record, transcribe, and summarize key points from all your team meetings.
-              </p>
-            </div>
-            
-            <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md border border-dashed border-taskmate-purple/40">
-              <h3 className="text-xl font-bold mb-3 text-taskmate-purple">Predictive Resource Allocation</h3>
-              <p className="text-muted-foreground">
-                AI that predicts resource needs and automatically adjusts task assignments to optimize team performance.
-              </p>
-            </div>
-            
-            <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md border border-dashed border-taskmate-purple/40">
-              <h3 className="text-xl font-bold mb-3 text-taskmate-purple">Multi-modal AI Assistant</h3>
-              <p className="text-muted-foreground">
-                Enhanced AI assistant with voice commands and image recognition for even more intuitive interactions.
-              </p>
-            </div>
           </div>
         </section>
       </main>
@@ -412,9 +275,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="bg-taskmate-purple/10 p-2 rounded-lg">
-                  <AreaChart className="h-5 w-5 text-taskmate-purple" />
-                </div>
+                <AreaChart className="h-6 w-6 text-taskmate-purple" />
                 <span className="text-xl font-bold">TaskMate</span>
               </div>
               <p className="text-muted-foreground text-sm">
@@ -425,30 +286,30 @@ const Index = () => {
             <div>
               <h3 className="font-bold mb-3">Product</h3>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="hover:text-taskmate-purple cursor-pointer">Features</li>
-                <li className="hover:text-taskmate-purple cursor-pointer">Pricing</li>
-                <li className="hover:text-taskmate-purple cursor-pointer">Testimonials</li>
-                <li className="hover:text-taskmate-purple cursor-pointer">Integrations</li>
+                <li>Features</li>
+                <li>Pricing</li>
+                <li>Testimonials</li>
+                <li>Integrations</li>
               </ul>
             </div>
             
             <div>
               <h3 className="font-bold mb-3">Resources</h3>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="hover:text-taskmate-purple cursor-pointer">Documentation</li>
-                <li className="hover:text-taskmate-purple cursor-pointer">API Reference</li>
-                <li className="hover:text-taskmate-purple cursor-pointer">Blog</li>
-                <li className="hover:text-taskmate-purple cursor-pointer">Support</li>
+                <li>Documentation</li>
+                <li>API Reference</li>
+                <li>Blog</li>
+                <li>Support</li>
               </ul>
             </div>
             
             <div>
               <h3 className="font-bold mb-3">Company</h3>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="hover:text-taskmate-purple cursor-pointer">About Us</li>
-                <li className="hover:text-taskmate-purple cursor-pointer">Careers</li>
-                <li className="hover:text-taskmate-purple cursor-pointer">Contact</li>
-                <li className="hover:text-taskmate-purple cursor-pointer">Privacy Policy</li>
+                <li>About Us</li>
+                <li>Careers</li>
+                <li>Contact</li>
+                <li>Privacy Policy</li>
               </ul>
             </div>
           </div>
