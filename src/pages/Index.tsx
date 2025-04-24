@@ -1,11 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { 
-  AreaChart, Users, Settings, Info, Check, ArrowRight, 
-  BarChart, MessageSquare, FileText, Calendar, 
-  BrainCircuit, Bot, Sparkles, Zap, Bell 
-} from 'lucide-react';
+import { AreaChart, Users, Settings, Info, Check, ArrowRight, BarChart, MessageSquare, FileText, Calendar, BrainCircuit, Bot, Sparkles, Zap, Bell } from 'lucide-react';
 
 const Index = () => {
   const navigate = useNavigate();

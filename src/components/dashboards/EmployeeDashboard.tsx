@@ -9,6 +9,7 @@ import { CheckCircle2, Clock, AlertCircle, MessagesSquare } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Cell } from 'recharts';
 import { useNavigate } from 'react-router-dom';
 import TaskItem from '@/components/tasks/TaskItem';
+import { AIAssistantPanel } from '@/components/ai/AIAssistantPanel';
 
 const EmployeeDashboard = () => {
   const { currentUser } = useAuth();
@@ -151,6 +152,9 @@ const EmployeeDashboard = () => {
 
         {/* AI assistant and tasks */}
         <div className="space-y-6">
+          {/* AI Assistant */}
+          <AIAssistantPanel />
+
           {/* Upcoming Tasks */}
           <Card className="overflow-hidden">
             <CardHeader>
