@@ -83,9 +83,10 @@ export const AIAssistantPanel = ({ fullScreen = false }: AIAssistantPanelProps) 
       <CardHeader className="bg-bloom-purple/10 py-3 px-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="bg-bloom-purple text-white p-1.5 rounded-lg">
-              <Bot className="h-4 w-4" />
-            </div>
+            <div className="bg-bloom-purple p-1.5 rounded-lg">
+              {/* <Bot className="h-4 w-4" /> */}
+              <i className="fa-solid fa-robot"></i>
+                          </div>
             <CardTitle className="text-sm">AI Assistant</CardTitle>
           </div>
           {!fullScreen && (
@@ -115,7 +116,7 @@ export const AIAssistantPanel = ({ fullScreen = false }: AIAssistantPanelProps) 
                 <div className={`
                     rounded-full p-1.5
                     ${message.role === 'user' 
-                      ? 'bg-bloom-purple text-white' 
+                      ? 'bg-bloom-purple text-primary' 
                       : 'bg-gray-100 dark:bg-gray-800'
                     }
                   `}
@@ -129,7 +130,7 @@ export const AIAssistantPanel = ({ fullScreen = false }: AIAssistantPanelProps) 
                   className={`
                     py-2 px-3 rounded-xl text-sm
                     ${message.role === 'user' 
-                      ? 'bg-bloom-purple text-white rounded-tr-none' 
+                      ? 'bg-gray text-primary bg-gray-dark rounded-tr-none' 
                       : 'bg-gray-100 dark:bg-gray-800 rounded-tl-none'
                     }
                   `}

@@ -15,14 +15,14 @@ const mockUsers: User[] = [
   {
     id: '1',
     name: 'Super Admin',
-    email: 'admin@bloomteam.com',
+    email: 'admin@taskmate.com',
     role: 'super_admin',
     avatar: '/assets/avatars/super-admin.png',
   },
   {
     id: '2',
     name: 'Team Leader',
-    email: 'leader@bloomteam.com',
+    email: 'leader@taskmate.com',
     role: 'team_leader',
     teamId: 'team1',
     avatar: '/assets/avatars/team-leader.png',
@@ -30,7 +30,7 @@ const mockUsers: User[] = [
   {
     id: '3',
     name: 'Employee',
-    email: 'employee@bloomteam.com',
+    email: 'employee@taskmate.com',
     role: 'employee',
     teamId: 'team1',
     avatar: '/assets/avatars/employee.png',
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     // Check for stored user data
-    const storedUser = localStorage.getItem('bloomteam_user');
+    const storedUser = localStorage.getItem('taskmate_user');
     if (storedUser) {
       setCurrentUser(JSON.parse(storedUser));
     }
@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       setCurrentUser(user);
-      localStorage.setItem('bloomteam_user', JSON.stringify(user));
+      localStorage.setItem('taskmate_user', JSON.stringify(user));
     } catch (error) {
       console.error('Login failed:', error);
       throw error;
@@ -84,7 +84,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = () => {
     setCurrentUser(null);
-    localStorage.removeItem('bloomteam_user');
+    localStorage.removeItem('taskmate_user');
   };
 
   return (
