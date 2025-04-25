@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,7 +9,6 @@ import { Bot, Send, User } from 'lucide-react';
 import { aiAssistantConversations } from '@/data/mockData';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
-import { useGeminiAi } from '@/hooks/useGeminiAi';
 
 interface AIAssistantPanelProps {
   fullScreen?: boolean;
@@ -20,6 +20,7 @@ export const AIAssistantPanel = ({ fullScreen = false }: AIAssistantPanelProps) 
   const [isExpanded, setIsExpanded] = useState(fullScreen);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   
+  // Auto-expand when in full-screen mode
   useEffect(() => {
     if (fullScreen) {
       setIsExpanded(true);
@@ -28,27 +29,29 @@ export const AIAssistantPanel = ({ fullScreen = false }: AIAssistantPanelProps) 
   
   if (!currentUser) return null;
   
-  const { generate, isLoading } = useGeminiAi();
-  
+  // Get the user's conversation with AI assistant
   const userConversation = aiAssistantConversations.find(
     conversation => conversation.userId === currentUser.id
   ) || { messages: [] };
   
-  const handleSendMessage = async () => {
+  // Handle sending message
+  const handleSendMessage = () => {
     if (!inputMessage.trim()) return;
     
-    try {
-      const response = await generate(inputMessage);
-      setInputMessage('');
+    // Simulate sending message to AI
+    setTimeout(() => {
+      // Show loading toast
+      toast.success('AI Assistant is responding...');
       
-      // You would typically update your messages state here
-      // and handle the response in your UI
-      
-    } catch (error) {
-      console.error('Failed to get AI response:', error);
-    }
+      // Simulate AI response after a short delay
+      setTimeout(() => {
+        // Reset the input field
+        setInputMessage('');
+      }, 1500);
+    }, 300);
   };
 
+  // Auto scroll to bottom when messages change
   useEffect(() => {
     if (scrollAreaRef.current) {
       scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
@@ -81,8 +84,9 @@ export const AIAssistantPanel = ({ fullScreen = false }: AIAssistantPanelProps) 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="bg-bloom-purple p-1.5 rounded-lg">
+              {/* <Bot className="h-4 w-4" /> */}
               <i className="fa-solid fa-robot"></i>
-            </div>
+                          </div>
             <CardTitle className="text-sm">AI Assistant</CardTitle>
           </div>
           {!fullScreen && (
