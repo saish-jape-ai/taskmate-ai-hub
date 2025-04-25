@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -23,6 +22,8 @@ import { cn } from '@/lib/utils';
 import { users } from '@/data/mockData';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
+import { Upload } from 'lucide-react';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 interface AITaskGeneratorProps {
   teamId: string;
@@ -39,13 +40,12 @@ export const AITaskGenerator = ({ teamId, onClose }: AITaskGeneratorProps) => {
   const [dueDate, setDueDate] = useState<Date>();
   const [isGenerating, setIsGenerating] = useState(false);
   const [isTaskGenerated, setIsTaskGenerated] = useState(false);
+  const [attachments, setAttachments] = useState<File[]>([]);
   
-  // Get team members
   const teamMembers = users.filter(user => 
     user.teamId === teamId && user.role === 'employee'
   );
   
-  // Generate task with AI
   const handleGenerateTask = () => {
     if (!prompt.trim()) {
       toast.error('Please enter a task description first');
@@ -54,9 +54,7 @@ export const AITaskGenerator = ({ teamId, onClose }: AITaskGeneratorProps) => {
     
     setIsGenerating(true);
     
-    // Simulate AI generation
     setTimeout(() => {
-      // Sample AI generated task (this would come from an actual AI API in production)
       const aiGeneratedTask = {
         title: 'Design new analytics dashboard',
         description: 'Create wireframes and mockups for the new analytics dashboard based on user feedback and requirements. Focus on improving data visualization and user experience. Include mobile responsive designs and interactions.',
@@ -74,22 +72,28 @@ export const AITaskGenerator = ({ teamId, onClose }: AITaskGeneratorProps) => {
     }, 2000);
   };
   
-  // Create task
   const handleCreateTask = () => {
     if (!title || !description || !assigneeId || !dueDate) {
       toast.error('Please fill in all required fields');
       return;
     }
     
-    // In a real app, this would send the task data to the backend
     toast.success('Task created successfully');
     if (onClose) onClose();
   };
   
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    setAttachments(prev => [...prev, ...files]);
+  };
+
+  const removeAttachment = (index: number) => {
+    setAttachments(prev => prev.filter((_, i) => i !== index));
+  };
+
   return (
     <div className="space-y-4 py-2">
       {!isTaskGenerated ? (
-        /* Step 1: Generate task with AI */
         <>
           <div className="space-y-2">
             <Label htmlFor="prompt">Describe the task you'd like to create</Label>
@@ -112,7 +116,6 @@ export const AITaskGenerator = ({ teamId, onClose }: AITaskGeneratorProps) => {
           </Button>
         </>
       ) : (
-        /* Step 2: Edit generated task and assign */
         <>
           <div className="border-l-4 border-bloom-purple bg-bloom-purple/5 p-3 mb-4">
             <div className="flex items-center gap-2 text-sm text-bloom-purple">
@@ -199,6 +202,38 @@ export const AITaskGenerator = ({ teamId, onClose }: AITaskGeneratorProps) => {
                   />
                 </PopoverContent>
               </Popover>
+            </div>
+            
+            <div className="space-y-2">
+              <Label>Attachments</Label>
+              <div className="border-2 border-dashed rounded-lg p-4 hover:bg-accent/50 transition-colors">
+                <label className="flex flex-col items-center gap-2 cursor-pointer">
+                  <Upload className="h-8 w-8 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">Upload files</span>
+                  <input
+                    type="file"
+                    multiple
+                    className="hidden"
+                    onChange={handleFileChange}
+                  />
+                </label>
+              </div>
+              {attachments.length > 0 && (
+                <div className="mt-2 space-y-2">
+                  {attachments.map((file, index) => (
+                    <div key={index} className="flex items-center justify-between bg-accent/50 p-2 rounded">
+                      <span className="text-sm">{file.name}</span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeAttachment(index)}
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           

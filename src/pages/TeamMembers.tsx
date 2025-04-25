@@ -1,4 +1,3 @@
-
 import AppLayout from "@/components/AppLayout";
 import { Users, Plus, Search, MessageSquare, Eye, ArrowLeft } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
@@ -9,11 +8,26 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 const TeamMembers = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+
+  if (currentUser?.role === 'employee') {
+    return (
+      <AppLayout title="Team Members">
+        <div className="max-w-4xl mx-auto text-center py-12">
+          <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+          <h2 className="text-2xl font-bold mb-2">Access Restricted</h2>
+          <p className="text-muted-foreground">
+            Only team leaders and administrators can manage team members.
+          </p>
+        </div>
+      </AppLayout>
+    );
+  }
 
   const teamMembers = users.filter(
     (user) => user.teamId === currentUser?.teamId && user.role !== "team_leader"
@@ -68,11 +82,15 @@ const TeamMembers = () => {
             <Card key={member.id} className="p-4 bg-white dark:bg-card hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <img
-                    src={member.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=9b87f5&color=fff`}
-                    alt={member.name}
-                    className="w-12 h-12 rounded-full border-2 border-taskmate-purple object-cover"
-                  />
+                  <Avatar className="w-12 h-12 border-2 border-taskmate-purple">
+                    <AvatarImage 
+                      src={member.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=9b87f5&color=fff`}
+                      alt={member.name} 
+                    />
+                    <AvatarFallback>
+                      {member.name.split(' ').map(n => n[0]).join('')}
+                    </AvatarFallback>
+                  </Avatar>
                   <div>
                     <div className="font-semibold text-foreground">{member.name}</div>
                     <div className="text-sm text-muted-foreground">{member.email}</div>

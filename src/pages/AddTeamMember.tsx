@@ -1,23 +1,24 @@
-
 import AppLayout from "@/components/AppLayout";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, UserPlus } from "lucide-react";
+import { ArrowLeft, UserPlus, Eye, EyeOff } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 const AddTeamMember = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     // Here you would integrate member creation logic (API)
     toast({
-      title: "Team member added", 
+      title: "Team member added",
       description: `${name} has been added to your team.`
     });
     navigate("/team-members");
@@ -64,6 +65,31 @@ const AddTeamMember = () => {
                 required
                 placeholder="Enter email address"
               />
+            </div>
+            <div>
+              <label className="block font-medium mb-1 text-foreground">Password</label>
+              <div className="relative">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  required
+                  placeholder="Enter password"
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-0 top-0 h-full px-3"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
             </div>
             <Button type="submit" className="w-full bg-taskmate-purple hover:bg-taskmate-purple/90">
               Add Member
