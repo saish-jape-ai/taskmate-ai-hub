@@ -1,10 +1,11 @@
+
 import { useState } from 'react';
 import AppLayout from '@/components/AppLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Bell, Plus, Search } from 'lucide-react';
+import { Bell, Plus, Search, CalendarIcon } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,12 +21,19 @@ import {
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from '@/lib/utils';
-import { CalendarIcon } from '@heroicons/react/24/outline';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
+import { format } from 'date-fns';
+
+// Mock users data for the dropdown
+const mockUsers = [
+  { id: "1", name: "John Doe", email: "john@example.com" },
+  { id: "2", name: "Jane Smith", email: "jane@example.com" },
+  { id: "3", name: "Alex Johnson", email: "alex@example.com" },
+];
 
 const ReminderForm = ({ onClose }: { onClose: () => void }) => {
   const [title, setTitle] = useState('');
@@ -35,6 +43,7 @@ const ReminderForm = ({ onClose }: { onClose: () => void }) => {
   const [time, setTime] = useState('');
   const [priority, setPriority] = useState('medium');
   const [repeat, setRepeat] = useState('none');
+  const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,6 +99,7 @@ const ReminderForm = ({ onClose }: { onClose: () => void }) => {
                 selected={date}
                 onSelect={setDate}
                 initialFocus
+                className={cn("p-3 pointer-events-auto")}
               />
             </PopoverContent>
           </Popover>
@@ -114,7 +124,7 @@ const ReminderForm = ({ onClose }: { onClose: () => void }) => {
             <SelectValue placeholder="Select team member" />
           </SelectTrigger>
           <SelectContent>
-            {users.map(user => (
+            {mockUsers.map(user => (
               <SelectItem key={user.id} value={user.id}>
                 {user.name}
               </SelectItem>
@@ -169,6 +179,7 @@ const ReminderForm = ({ onClose }: { onClose: () => void }) => {
 const Reminders = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const { toast } = useToast();
+  const [open, setOpen] = useState(false);
 
   const reminders = [
     {
@@ -221,7 +232,7 @@ const Reminders = () => {
                 className="pl-9"
               />
             </div>
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <Button>
                   <Plus className="h-4 w-4 mr-2" />
@@ -232,7 +243,7 @@ const Reminders = () => {
                 <DialogHeader>
                   <DialogTitle>Create New Reminder</DialogTitle>
                 </DialogHeader>
-                <ReminderForm onClose={() => document.querySelector('button[aria-label="Close"]')?.click()} />
+                <ReminderForm onClose={() => setOpen(false)} />
               </DialogContent>
             </Dialog>
           </div>
