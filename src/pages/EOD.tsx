@@ -1,4 +1,3 @@
-
 import AppLayout from "@/components/AppLayout";
 import { useState, useRef } from "react";
 import { useAuth } from "@/context/AuthContext";
@@ -28,7 +27,7 @@ const EOD = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // In production, replace with real API call
+
     setTimeout(() => {
       setLoading(false);
       setEod("");
@@ -52,38 +51,44 @@ const EOD = () => {
     }
 
     setGenerating(true);
-    // Simulated AI generation - replace with actual AI integration
-    setTimeout(() => {
-      const generatedEOD = `Based on today's activities, here's a detailed EOD report:
+    try {
+      const res = await fetch("http://localhost:8000/api/eod/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          user_id: currentUser?.id,
+          activities: todayActivities
+        })
+      });
 
-1. Tasks Completed:
-${todayActivities.split('\n').map(activity => `- ${activity}`).join('\n')}
+      if (!res.ok) {
+        throw new Error("Failed to generate EOD");
+      }
 
-2. Key Achievements:
-- Successfully completed assigned tasks within timeline
-- Collaborated effectively with team members
-
-3. Next Steps:
-- Continue working on ongoing projects
-- Follow up on pending items tomorrow
-
-4. Blockers/Challenges:
-- No major blockers encountered today`;
-
-      setEod(generatedEOD);
+      const data = await res.json();
+      setEod(data.content);
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: "AI Error",
+        description: "Something went wrong generating your EOD report",
+        variant: "destructive"
+      });
+    } finally {
       setGenerating(false);
-    }, 1500);
+    }
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
-    
+
     const newAttachments: Attachment[] = [];
-    
+
     Array.from(e.target.files).forEach(file => {
-      // Create object URL for preview
       const url = URL.createObjectURL(file);
-      
+
       newAttachments.push({
         name: file.name,
         type: file.type,
@@ -91,25 +96,21 @@ ${todayActivities.split('\n').map(activity => `- ${activity}`).join('\n')}
         url
       });
     });
-    
+
     setAttachments([...attachments, ...newAttachments]);
-    
-    // Reset file input
+
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
   };
-  
+
   const removeAttachment = (index: number) => {
     const newAttachments = [...attachments];
-    
-    // Revoke object URL to avoid memory leaks
     URL.revokeObjectURL(newAttachments[index].url);
-    
     newAttachments.splice(index, 1);
     setAttachments(newAttachments);
   };
-  
+
   const getFileSizeDisplay = (bytes: number): string => {
     if (bytes < 1024) return bytes + ' B';
     else if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB';
@@ -129,9 +130,9 @@ ${todayActivities.split('\n').map(activity => `- ${activity}`).join('\n')}
               <p className="text-muted-foreground mt-1">Share your daily accomplishments with your team</p>
             </div>
           </div>
-          
+
           <Separator className="my-6" />
-          
+
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-2">Generate EOD with AI</h3>
             <div className="space-y-4">
@@ -166,7 +167,7 @@ ${todayActivities.split('\n').map(activity => `- ${activity}`).join('\n')}
                 className="min-h-[200px]"
               />
             </div>
-            
+
             {/* File attachments section */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -189,7 +190,7 @@ ${todayActivities.split('\n').map(activity => `- ${activity}`).join('\n')}
                   accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt,.xls,.xlsx"
                 />
               </div>
-              
+
               {attachments.length > 0 ? (
                 <div className="space-y-2 p-4 border rounded-md bg-gray-50 dark:bg-gray-900">
                   {attachments.map((file, index) => (
@@ -226,7 +227,7 @@ ${todayActivities.split('\n').map(activity => `- ${activity}`).join('\n')}
                 </div>
               )}
             </div>
-            
+
             <Button
               type="submit"
               className="w-full bg-taskmate-purple hover:bg-taskmate-purple/90"
