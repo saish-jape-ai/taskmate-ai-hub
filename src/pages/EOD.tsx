@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
 
 interface Attachment {
   name: string;
@@ -31,9 +34,9 @@ const EOD = () => {
     setTimeout(() => {
       setLoading(false);
       setEod("");
-      toast({ 
-        title: "EOD Submitted", 
-        description: "Your End Of Day update has been sent to your manager." 
+      toast({
+        title: "EOD Submitted",
+        description: "Your End Of Day update has been sent to your manager."
       });
       setTodayActivities("");
       setAttachments([]);
@@ -42,10 +45,10 @@ const EOD = () => {
 
   const generateEOD = async () => {
     if (!todayActivities.trim()) {
-      toast({ 
-        title: "Error", 
+      toast({
+        title: "Error",
         description: "Please enter your activities for today",
-        variant: "destructive" 
+        variant: "destructive"
       });
       return;
     }
@@ -158,21 +161,30 @@ const EOD = () => {
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="block font-semibold mb-2">Your EOD Report</label>
-              <Textarea
-                value={eod}
-                onChange={e => setEod(e.target.value)}
-                required
-                placeholder="Describe your work, achievements, blockers, or anything to highlight..."
-                disabled={loading}
-                className="min-h-[200px]"
-              />
+              {eod ? (
+                <div className="prose dark:prose-invert max-w-full border p-4 rounded-md bg-gray-50 dark:bg-gray-900">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {eod}
+                  </ReactMarkdown>
+                </div>
+              ) : (
+                <Textarea
+                  value={eod}
+                  onChange={e => setEod(e.target.value)}
+                  required
+                  placeholder="Describe your work, achievements, blockers, or anything to highlight..."
+                  disabled={loading}
+                  className="min-h-[200px]"
+                />
+              )}
+
             </div>
 
             {/* File attachments section */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <label className="block font-semibold">Attachments</label>
-                <Button 
+                <Button
                   type="button"
                   variant="outline"
                   size="sm"

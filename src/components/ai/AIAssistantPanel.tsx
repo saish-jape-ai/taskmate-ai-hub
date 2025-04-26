@@ -7,6 +7,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Bot, Send, User } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -126,22 +128,23 @@ export const AIAssistantPanel = ({ fullScreen = false }: AIAssistantPanelProps) 
                 className={`flex items-start gap-2 max-w-[85%] ${message.role === 'user' ? 'flex-row-reverse' : ''}`}
               >
                 <div
-                  className={`rounded-full p-1.5 ${
-                    message.role === 'user'
+                  className={`rounded-full p-1.5 ${message.role === 'user'
                       ? 'bg-bloom-purple text-primary'
                       : 'bg-gray-100 dark:bg-gray-800'
-                  }`}
+                    }`}
                 >
                   {message.role === 'user' ? <User className="h-3 w-3" /> : <Bot className="h-3 w-3" />}
                 </div>
                 <div
-                  className={`py-2 px-3 rounded-xl text-sm ${
-                    message.role === 'user'
+                  className={`py-2 px-3 rounded-xl text-sm ${message.role === 'user'
                       ? 'bg-gray text-primary bg-gray-dark rounded-tr-none'
                       : 'bg-gray-100 dark:bg-gray-800 rounded-tl-none'
-                  }`}
+                    }`}
                 >
-                  {message.content}
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {message.content}
+                  </ReactMarkdown>
+
                 </div>
               </div>
             </div>
