@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-
 import {
   Select,
   SelectContent,
@@ -14,7 +13,7 @@ import {
 import { Label } from '@/components/ui/label';
 import { CalendarIcon, Sparkles, Upload } from 'lucide-react';
 import { format } from 'date-fns';
-import { Calendar } from '@/components/ui/calendar'
+import { Calendar } from '@/components/ui/calendar';
 import {
   Popover,
   PopoverContent,
@@ -24,6 +23,8 @@ import { cn } from '@/lib/utils';
 import { users } from '@/data/mockData';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
+import { Input } from '@/components/ui/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface AITaskGeneratorProps {
   teamId: string;
@@ -50,6 +51,7 @@ export const AITaskGenerator = ({ teamId, onClose, existingTask, isEditing = fal
   const [isGenerating, setIsGenerating] = useState(false);
   const [isTaskGenerated, setIsTaskGenerated] = useState(!!existingTask);
   const [attachments, setAttachments] = useState<File[]>(existingTask?.attachments || []);
+  const [activeTab, setActiveTab] = useState<'ai' | 'manual'>(isEditing ? 'manual' : 'ai');
 
   const teamMembers = users.filter(user =>
     user.teamId === teamId && user.role === 'employee'
@@ -100,7 +102,6 @@ export const AITaskGenerator = ({ teamId, onClose, existingTask, isEditing = fal
       return;
     }
 
-    // Replace with actual API call
     toast.success(isEditing ? 'Task updated successfully' : 'Task created successfully');
     if (onClose) onClose();
   };
@@ -117,51 +118,54 @@ export const AITaskGenerator = ({ teamId, onClose, existingTask, isEditing = fal
   return (
     <div className="space-y-4 py-2">
       {!isTaskGenerated ? (
-        <>
-          <div className="space-y-2">
-            <Label htmlFor="prompt">Describe the task you'd like to create</Label>
-            <Textarea
-              id="prompt"
-              placeholder="E.g. Create a dashboard mockup for our team's analytics"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              rows={4}
-            />
-          </div>
+        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'ai' | 'manual')}>
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="ai">Generate with AI</TabsTrigger>
+            <TabsTrigger value="manual">Create Manually</TabsTrigger>
+          </TabsList>
 
-          <Button
-            className="w-full"
-            onClick={handleGenerateTask}
-            disabled={isGenerating}
-          >
-            <Sparkles className="mr-2 h-4 w-4" />
-            {isGenerating ? 'Generating...' : 'Generate Task with AI'}
-          </Button>
-        </>
-      ) : (
-        <>
-          <div className="border-l-4 border-bloom-purple bg-bloom-purple/5 p-3 mb-4">
-            <div className="flex items-center gap-2 text-sm text-bloom-purple">
-              <Sparkles className="h-4 w-4" />
-              <span className="font-medium">{isEditing ? "Edit Task" : "AI-Generated Task"}</span>
+          <TabsContent value="ai" className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="prompt">Describe the task you'd like to create</Label>
+              <Textarea
+                id="prompt"
+                placeholder="E.g. Create a dashboard mockup for our team's analytics"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                rows={4}
+              />
             </div>
-          </div>
 
-          <div className="space-y-4">
+            <Button
+              className="w-full"
+              onClick={handleGenerateTask}
+              disabled={isGenerating}
+            >
+              <Sparkles className="mr-2 h-4 w-4" />
+              {isGenerating ? 'Generating...' : 'Generate Task with AI'}
+            </Button>
+          </TabsContent>
+
+          <TabsContent value="manual" className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="title">Task Title</Label>
-              <div className="border rounded-md p-3 bg-muted text-sm">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>{title}</ReactMarkdown>
-              </div>
-
+              <Input
+                id="title"
+                placeholder="Enter task title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="description">Task Description</Label>
-              <div className="prose prose-sm max-w-none border rounded-md p-3 bg-muted text-sm">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>{description}</ReactMarkdown>
-              </div>
-
+              <Textarea
+                id="description"
+                placeholder="Enter task description..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={4}
+              />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -218,7 +222,99 @@ export const AITaskGenerator = ({ teamId, onClose, existingTask, isEditing = fal
                     selected={dueDate}
                     onSelect={setDueDate}
                     initialFocus
-                    className="pointer-events-auto"
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            <Button
+              onClick={() => setIsTaskGenerated(true)}
+              className="w-full"
+            >
+              Continue
+            </Button>
+          </TabsContent>
+        </Tabs>
+      ) : (
+        <>
+          <div className="border-l-4 border-bloom-purple bg-bloom-purple/5 p-3 mb-4">
+            <div className="flex items-center gap-2 text-sm text-bloom-purple">
+              <Sparkles className="h-4 w-4" />
+              <span className="font-medium">
+                {isEditing ? "Edit Task" : activeTab === 'ai' ? "AI-Generated Task" : "New Task"}
+              </span>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="title">Task Title</Label>
+              <div className="border rounded-md p-3 bg-muted text-sm">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{title}</ReactMarkdown>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="description">Task Description</Label>
+              <div className="prose prose-sm max-w-none border rounded-md p-3 bg-muted text-sm">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{description}</ReactMarkdown>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="assignee">Assign To</Label>
+                <Select value={assigneeId} onValueChange={setAssigneeId}>
+                  <SelectTrigger id="assignee">
+                    <SelectValue placeholder="Select team member" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {teamMembers.map(member => (
+                      <SelectItem key={member.id} value={member.id}>
+                        {member.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="priority">Priority</Label>
+                <Select value={priority} onValueChange={setPriority}>
+                  <SelectTrigger id="priority">
+                    <SelectValue placeholder="Select priority" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="low">Low</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="high">High</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="dueDate">Due Date</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    id="dueDate"
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-normal",
+                      !dueDate && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {dueDate ? format(dueDate, "PPP") : "Select due date"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={dueDate}
+                    onSelect={setDueDate}
+                    initialFocus
                   />
                 </PopoverContent>
               </Popover>

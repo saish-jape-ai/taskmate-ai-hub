@@ -156,7 +156,7 @@ ${todayActivities.split('\n').map(activity => `- ${activity}`).join('\n')}
           </DialogTitle>
         </DialogHeader>
         
-        <Tabs defaultValue="write" className="mt-2">
+        <Tabs defaultValue={isEditing ? "write" : "generate"} className="mt-2">
           <TabsList>
             <TabsTrigger value="write">Write EOD</TabsTrigger>
             <TabsTrigger value="generate">AI Generate</TabsTrigger>
