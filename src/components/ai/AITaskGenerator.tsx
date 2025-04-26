@@ -28,19 +28,28 @@ import { toast } from 'sonner';
 interface AITaskGeneratorProps {
   teamId: string;
   onClose?: () => void;
+  existingTask?: {
+    title: string;
+    description: string;
+    assigneeId: string;
+    priority: string;
+    dueDate?: Date;
+    attachments: File[];
+  };
+  isEditing?: boolean;
 }
 
-export const AITaskGenerator = ({ teamId, onClose }: AITaskGeneratorProps) => {
+export const AITaskGenerator = ({ teamId, onClose, existingTask, isEditing = false }: AITaskGeneratorProps) => {
   const { currentUser } = useAuth();
   const [prompt, setPrompt] = useState('');
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [assigneeId, setAssigneeId] = useState('');
-  const [priority, setPriority] = useState('medium');
-  const [dueDate, setDueDate] = useState<Date>();
+  const [title, setTitle] = useState(existingTask?.title || '');
+  const [description, setDescription] = useState(existingTask?.description || '');
+  const [assigneeId, setAssigneeId] = useState(existingTask?.assigneeId || '');
+  const [priority, setPriority] = useState(existingTask?.priority || 'medium');
+  const [dueDate, setDueDate] = useState<Date | undefined>(existingTask?.dueDate);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [isTaskGenerated, setIsTaskGenerated] = useState(false);
-  const [attachments, setAttachments] = useState<File[]>([]);
+  const [isTaskGenerated, setIsTaskGenerated] = useState(!!existingTask);
+  const [attachments, setAttachments] = useState<File[]>(existingTask?.attachments || []);
 
   const teamMembers = users.filter(user =>
     user.teamId === teamId && user.role === 'employee'
@@ -92,7 +101,7 @@ export const AITaskGenerator = ({ teamId, onClose }: AITaskGeneratorProps) => {
     }
 
     // Replace with actual API call
-    toast.success('Task created successfully');
+    toast.success(isEditing ? 'Task updated successfully' : 'Task created successfully');
     if (onClose) onClose();
   };
 
@@ -134,7 +143,7 @@ export const AITaskGenerator = ({ teamId, onClose }: AITaskGeneratorProps) => {
           <div className="border-l-4 border-bloom-purple bg-bloom-purple/5 p-3 mb-4">
             <div className="flex items-center gap-2 text-sm text-bloom-purple">
               <Sparkles className="h-4 w-4" />
-              <span className="font-medium">AI-Generated Task</span>
+              <span className="font-medium">{isEditing ? "Edit Task" : "AI-Generated Task"}</span>
             </div>
           </div>
 
@@ -249,11 +258,11 @@ export const AITaskGenerator = ({ teamId, onClose }: AITaskGeneratorProps) => {
           </div>
 
           <div className="flex justify-end space-x-2 pt-4">
-            <Button variant="outline" onClick={() => setIsTaskGenerated(false)}>
-              Back
+            <Button variant="outline" onClick={() => isEditing ? onClose?.() : setIsTaskGenerated(false)}>
+              {isEditing ? "Cancel" : "Back"}
             </Button>
             <Button onClick={handleCreateTask}>
-              Create Task
+              {isEditing ? "Save Changes" : "Create Task"}
             </Button>
           </div>
         </>

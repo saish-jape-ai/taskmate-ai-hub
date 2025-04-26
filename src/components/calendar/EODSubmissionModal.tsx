@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 import { format } from "date-fns";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -22,15 +21,20 @@ interface Attachment {
 interface EODSubmissionModalProps {
   date: Date;
   onClose: () => void;
+  existingEOD?: {
+    content: string;
+    attachments: Attachment[];
+  };
+  isEditing?: boolean;
 }
 
-export const EODSubmissionModal = ({ date, onClose }: EODSubmissionModalProps) => {
-  const [eodContent, setEodContent] = useState("");
+export const EODSubmissionModal = ({ date, onClose, existingEOD, isEditing = false }: EODSubmissionModalProps) => {
+  const [eodContent, setEodContent] = useState(existingEOD?.content || "");
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [todayActivities, setTodayActivities] = useState("");
   const [isRecording, setIsRecording] = useState(false);
-  const [attachments, setAttachments] = useState<Attachment[]>([]);
+  const [attachments, setAttachments] = useState<Attachment[]>(existingEOD?.attachments || []);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const handleGenerateEOD = () => {
@@ -134,10 +138,10 @@ ${todayActivities.split('\n').map(activity => `- ${activity}`).join('\n')}
     
     setIsSubmitting(true);
     
-    // Simulate API call to submit EOD
+    // Simulate API call to submit/update EOD
     setTimeout(() => {
       setIsSubmitting(false);
-      toast.success("EOD report submitted successfully!");
+      toast.success(isEditing ? "EOD report updated successfully!" : "EOD report submitted successfully!");
       onClose();
     }, 1000);
   };
@@ -148,7 +152,7 @@ ${todayActivities.split('\n').map(activity => `- ${activity}`).join('\n')}
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <FileText className="h-5 w-5 text-taskmate-purple" />
-            <span>Submit EOD Report - {format(date, "MMMM d, yyyy")}</span>
+            <span>{isEditing ? "Edit" : "Submit"} EOD Report - {format(date, "MMMM d, yyyy")}</span>
           </DialogTitle>
         </DialogHeader>
         
@@ -346,7 +350,7 @@ ${todayActivities.split('\n').map(activity => `- ${activity}`).join('\n')}
               className="bg-taskmate-purple hover:bg-taskmate-purple/90"
             >
               <Send className="mr-2 h-4 w-4" />
-              {isSubmitting ? "Submitting..." : "Submit EOD"}
+              {isSubmitting ? "Saving..." : isEditing ? "Save Changes" : "Submit EOD"}
             </Button>
           </div>
         </DialogFooter>
