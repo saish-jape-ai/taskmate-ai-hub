@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
-import { 
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -12,7 +14,7 @@ import {
 import { Label } from '@/components/ui/label';
 import { CalendarIcon, Sparkles, Upload } from 'lucide-react';
 import { format } from 'date-fns';
-import { Calendar } from '@/components/ui/calendar';
+import { Calendar } from '@/components/ui/calendar'
 import {
   Popover,
   PopoverContent,
@@ -118,7 +120,7 @@ export const AITaskGenerator = ({ teamId, onClose }: AITaskGeneratorProps) => {
             />
           </div>
 
-          <Button 
+          <Button
             className="w-full"
             onClick={handleGenerateTask}
             disabled={isGenerating}
@@ -139,21 +141,18 @@ export const AITaskGenerator = ({ teamId, onClose }: AITaskGeneratorProps) => {
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="title">Task Title</Label>
-              <Input
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
+              <div className="border rounded-md p-3 bg-muted text-sm">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{title}</ReactMarkdown>
+              </div>
+
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="description">Task Description</Label>
-              <Textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                rows={4}
-              />
+              <div className="prose prose-sm max-w-none border rounded-md p-3 bg-muted text-sm">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{description}</ReactMarkdown>
+              </div>
+
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
