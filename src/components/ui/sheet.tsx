@@ -1,4 +1,3 @@
-
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { cva, type VariantProps } from "class-variance-authority"
 import { X } from "lucide-react"
@@ -51,14 +50,14 @@ const sheetVariants = cva(
 
 interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
-  VariantProps<typeof sheetVariants> { 
+    VariantProps<typeof sheetVariants> {
     showScrollArea?: boolean;
-  }
+}
 
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
->(({ side = "right", className, children, showScrollArea = false, ...props }, ref) => (
+>(({ side = "right", className, children, showScrollArea = true, ...props }, ref) => (
   <SheetPortal>
     <SheetOverlay />
     <SheetPrimitive.Content
@@ -67,10 +66,8 @@ const SheetContent = React.forwardRef<
       {...props}
     >
       {showScrollArea ? (
-        <ScrollArea className="h-[calc(100vh-5rem)]">
-          <div className="pr-6">
-            {children}
-          </div>
+        <ScrollArea className="h-[calc(100vh-5rem)] pr-6">
+          {children}
         </ScrollArea>
       ) : (
         children
