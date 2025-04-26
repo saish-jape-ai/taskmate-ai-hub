@@ -191,67 +191,59 @@ const Tasks = () => {
               </TabsContent>
               
               <TabsContent value="pending" className="mt-0">
-                <ScrollArea className="h-full">
-                  <div className="divide-y">
-                    {pendingTasks.length > 0 ? (
-                      pendingTasks.map((task) => (
-                        <TaskItem key={task.id} task={task} />
-                      ))
-                    ) : (
-                      <div className="py-8 text-center">
-                        <p className="text-muted-foreground">No pending tasks</p>
-                      </div>
-                    )}
-                  </div>
-                </ScrollArea>
+                <div className="divide-y">
+                  {pendingTasks.length > 0 ? (
+                    pendingTasks.map((task) => (
+                      <TaskItem key={task.id} task={task} />
+                    ))
+                  ) : (
+                    <div className="py-8 text-center">
+                      <p className="text-muted-foreground">No pending tasks</p>
+                    </div>
+                  )}
+                </div>
               </TabsContent>
               
               <TabsContent value="in_progress" className="mt-0">
-                <ScrollArea className="h-full">
-                  <div className="divide-y">
-                    {inProgressTasks.length > 0 ? (
-                      inProgressTasks.map((task) => (
-                        <TaskItem key={task.id} task={task} />
-                      ))
-                    ) : (
-                      <div className="py-8 text-center">
-                        <p className="text-muted-foreground">No tasks in progress</p>
-                      </div>
-                    )}
-                  </div>
-                </ScrollArea>
+                <div className="divide-y">
+                  {inProgressTasks.length > 0 ? (
+                    inProgressTasks.map((task) => (
+                      <TaskItem key={task.id} task={task} />
+                    ))
+                  ) : (
+                    <div className="py-8 text-center">
+                      <p className="text-muted-foreground">No tasks in progress</p>
+                    </div>
+                  )}
+                </div>
               </TabsContent>
               
               <TabsContent value="completed" className="mt-0">
-                <ScrollArea className="h-full">
-                  <div className="divide-y">
-                    {completedTasks.length > 0 ? (
-                      completedTasks.map((task) => (
-                        <TaskItem key={task.id} task={task} />
-                      ))
-                    ) : (
-                      <div className="py-8 text-center">
-                        <p className="text-muted-foreground">No completed tasks</p>
-                      </div>
-                    )}
-                  </div>
-                </ScrollArea>
+                <div className="divide-y">
+                  {completedTasks.length > 0 ? (
+                    completedTasks.map((task) => (
+                      <TaskItem key={task.id} task={task} />
+                    ))
+                  ) : (
+                    <div className="py-8 text-center">
+                      <p className="text-muted-foreground">No completed tasks</p>
+                    </div>
+                  )}
+                </div>
               </TabsContent>
               
               <TabsContent value="overdue" className="mt-0">
-                <ScrollArea className="h-full">
-                  <div className="divide-y">
-                    {overdueTasks.length > 0 ? (
-                      overdueTasks.map((task) => (
-                        <TaskItem key={task.id} task={task} />
-                      ))
-                    ) : (
-                      <div className="py-8 text-center">
-                        <p className="text-muted-foreground">No overdue tasks</p>
-                      </div>
-                    )}
-                  </div>
-                </ScrollArea>
+                <div className="divide-y">
+                  {overdueTasks.length > 0 ? (
+                    overdueTasks.map((task) => (
+                      <TaskItem key={task.id} task={task} />
+                    ))
+                  ) : (
+                    <div className="py-8 text-center">
+                      <p className="text-muted-foreground">No overdue tasks</p>
+                    </div>
+                  )}
+                </div>
               </TabsContent>
             </ScrollArea>
           </Card>
@@ -259,11 +251,13 @@ const Tasks = () => {
       </div>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent className="sm:max-w-[600px]">
+        <DialogContent className="sm:max-w-[600px] max-h-[90vh]">
           <DialogHeader>
             <DialogTitle>Generate Task with AI</DialogTitle>
           </DialogHeader>
-          <AITaskGenerator teamId={currentUser.teamId || ''} onClose={() => setShowDialog(false)} />
+          <ScrollArea className="max-h-[70vh] pr-3">
+            <AITaskGenerator teamId={currentUser.teamId || ''} onClose={() => setShowDialog(false)} />
+          </ScrollArea>
         </DialogContent>
       </Dialog>
     </AppLayout>

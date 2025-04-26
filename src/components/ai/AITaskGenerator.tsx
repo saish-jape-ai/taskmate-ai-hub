@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -144,7 +145,6 @@ export const AITaskGenerator = ({ teamId, onClose }: AITaskGeneratorProps) => {
               <div className="border rounded-md p-3 bg-muted text-sm">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{title}</ReactMarkdown>
               </div>
-
             </div>
 
             <div className="space-y-2">
@@ -152,7 +152,6 @@ export const AITaskGenerator = ({ teamId, onClose }: AITaskGeneratorProps) => {
               <div className="prose prose-sm max-w-none border rounded-md p-3 bg-muted text-sm">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{description}</ReactMarkdown>
               </div>
-
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -203,13 +202,13 @@ export const AITaskGenerator = ({ teamId, onClose }: AITaskGeneratorProps) => {
                     {dueDate ? format(dueDate, "PPP") : "Select due date"}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
+                <PopoverContent className="w-auto p-0" align="start" side="bottom">
                   <Calendar
                     mode="single"
                     selected={dueDate}
                     onSelect={setDueDate}
                     initialFocus
-                    className="pointer-events-auto"
+                    className="p-3 pointer-events-auto"
                   />
                 </PopoverContent>
               </Popover>
@@ -230,10 +229,10 @@ export const AITaskGenerator = ({ teamId, onClose }: AITaskGeneratorProps) => {
                 </label>
               </div>
               {attachments.length > 0 && (
-                <div className="mt-2 space-y-2">
+                <div className="mt-2 space-y-2 max-h-40 overflow-y-auto">
                   {attachments.map((file, index) => (
                     <div key={index} className="flex items-center justify-between bg-accent/50 p-2 rounded">
-                      <span className="text-sm">{file.name}</span>
+                      <span className="text-sm truncate max-w-[80%]">{file.name}</span>
                       <Button
                         variant="ghost"
                         size="sm"
