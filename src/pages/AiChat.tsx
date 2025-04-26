@@ -26,7 +26,7 @@ const AiChat = () => {
 
   return (
     <AppLayout title="Chat with AI">
-      <div className="max-w-4xl mx-auto h-[calc(100vh-200px)]">
+      <div className="max-w-4xl mx-auto h-[calc(115vh-200px)]">
         <div className="grid grid-cols-1 h-full">
           <Card className="p-0 overflow-hidden h-full">
             <AIAssistantPanel fullScreen={true} />
