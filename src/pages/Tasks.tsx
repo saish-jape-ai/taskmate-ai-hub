@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import AppLayout from '@/components/AppLayout';
@@ -19,7 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Task } from '@/types';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const Tasks = () => {
   const { currentUser } = useAuth();
@@ -30,39 +29,30 @@ const Tasks = () => {
   
   if (!currentUser) return null;
   
-  // Get user's team
   const team = teams.find(team => team.id === currentUser.teamId);
   
-  // Filter tasks based on user role
   const filterTasksByRole = () => {
     switch (currentUser.role) {
       case 'super_admin':
-        // Super admin can see all tasks
         return tasks;
       case 'team_leader':
-        // Team leader can see all tasks for their team
         return tasks.filter(task => task.teamId === currentUser.teamId);
       case 'employee':
-        // Employee can only see tasks assigned to them
         return tasks.filter(task => task.assigneeId === currentUser.id);
       default:
         return [];
     }
   };
   
-  // Apply search and filters
   const filteredTasks = filterTasksByRole().filter(task => {
-    // Apply search filter
     if (searchQuery && !task.title.toLowerCase().includes(searchQuery.toLowerCase())) {
       return false;
     }
     
-    // Apply status filter
     if (statusFilter.length > 0 && !statusFilter.includes(task.status)) {
       return false;
     }
     
-    // Apply priority filter
     if (priorityFilter.length > 0 && !priorityFilter.includes(task.priority)) {
       return false;
     }
@@ -70,13 +60,11 @@ const Tasks = () => {
     return true;
   });
   
-  // Group tasks by status
   const pendingTasks = filteredTasks.filter(task => task.status === 'pending');
   const inProgressTasks = filteredTasks.filter(task => task.status === 'in_progress');
   const completedTasks = filteredTasks.filter(task => task.status === 'completed');
   const overdueTasks = filteredTasks.filter(task => task.status === 'overdue');
   
-  // Handle status filter change
   const handleStatusFilterChange = (status: string) => {
     setStatusFilter(prev => 
       prev.includes(status) 
@@ -85,7 +73,6 @@ const Tasks = () => {
     );
   };
   
-  // Handle priority filter change
   const handlePriorityFilterChange = (priority: string) => {
     setPriorityFilter(prev => 
       prev.includes(priority) 
@@ -97,12 +84,10 @@ const Tasks = () => {
   return (
     <AppLayout title="Tasks">
       <div className="space-y-6">
-        {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <h2 className="text-3xl font-bold">Tasks</h2>
           
           <div className="flex flex-col sm:flex-row gap-3">
-            {/* Search input */}
             <div className="relative">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
@@ -113,7 +98,6 @@ const Tasks = () => {
               />
             </div>
             
-            {/* Filter dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline">
@@ -172,7 +156,6 @@ const Tasks = () => {
               </DropdownMenuContent>
             </DropdownMenu>
             
-            {/* Create task button (only for team leaders and super admins) */}
             {(currentUser.role === 'team_leader' || currentUser.role === 'super_admin') && (
               <Button onClick={() => setShowDialog(true)}>
                 <Plus className="mr-2 h-4 w-4" />
@@ -182,7 +165,6 @@ const Tasks = () => {
           </div>
         </div>
         
-        {/* Tasks tabs */}
         <Tabs defaultValue="all" className="w-full">
           <TabsList className="grid grid-cols-5 mb-4">
             <TabsTrigger value="all">All ({filteredTasks.length})</TabsTrigger>
@@ -192,81 +174,90 @@ const Tasks = () => {
             <TabsTrigger value="overdue">Overdue ({overdueTasks.length})</TabsTrigger>
           </TabsList>
           
-          <Card>
-            <TabsContent value="all" className="mt-0">
-              <div className="divide-y">
-                {filteredTasks.length > 0 ? (
-                  filteredTasks.map((task) => (
-                    <TaskItem key={task.id} task={task} />
-                  ))
-                ) : (
-                  <div className="py-8 text-center">
-                    <p className="text-muted-foreground">No tasks found</p>
+          <Card className="h-[calc(100vh-250px)]">
+            <ScrollArea className="h-full w-full">
+              <TabsContent value="all" className="mt-0">
+                <div className="divide-y">
+                  {filteredTasks.length > 0 ? (
+                    filteredTasks.map((task) => (
+                      <TaskItem key={task.id} task={task} />
+                    ))
+                  ) : (
+                    <div className="py-8 text-center">
+                      <p className="text-muted-foreground">No tasks found</p>
+                    </div>
+                  )}
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="pending" className="mt-0">
+                <ScrollArea className="h-full">
+                  <div className="divide-y">
+                    {pendingTasks.length > 0 ? (
+                      pendingTasks.map((task) => (
+                        <TaskItem key={task.id} task={task} />
+                      ))
+                    ) : (
+                      <div className="py-8 text-center">
+                        <p className="text-muted-foreground">No pending tasks</p>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="pending" className="mt-0">
-              <div className="divide-y">
-                {pendingTasks.length > 0 ? (
-                  pendingTasks.map((task) => (
-                    <TaskItem key={task.id} task={task} />
-                  ))
-                ) : (
-                  <div className="py-8 text-center">
-                    <p className="text-muted-foreground">No pending tasks</p>
+                </ScrollArea>
+              </TabsContent>
+              
+              <TabsContent value="in_progress" className="mt-0">
+                <ScrollArea className="h-full">
+                  <div className="divide-y">
+                    {inProgressTasks.length > 0 ? (
+                      inProgressTasks.map((task) => (
+                        <TaskItem key={task.id} task={task} />
+                      ))
+                    ) : (
+                      <div className="py-8 text-center">
+                        <p className="text-muted-foreground">No tasks in progress</p>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="in_progress" className="mt-0">
-              <div className="divide-y">
-                {inProgressTasks.length > 0 ? (
-                  inProgressTasks.map((task) => (
-                    <TaskItem key={task.id} task={task} />
-                  ))
-                ) : (
-                  <div className="py-8 text-center">
-                    <p className="text-muted-foreground">No tasks in progress</p>
+                </ScrollArea>
+              </TabsContent>
+              
+              <TabsContent value="completed" className="mt-0">
+                <ScrollArea className="h-full">
+                  <div className="divide-y">
+                    {completedTasks.length > 0 ? (
+                      completedTasks.map((task) => (
+                        <TaskItem key={task.id} task={task} />
+                      ))
+                    ) : (
+                      <div className="py-8 text-center">
+                        <p className="text-muted-foreground">No completed tasks</p>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="completed" className="mt-0">
-              <div className="divide-y">
-                {completedTasks.length > 0 ? (
-                  completedTasks.map((task) => (
-                    <TaskItem key={task.id} task={task} />
-                  ))
-                ) : (
-                  <div className="py-8 text-center">
-                    <p className="text-muted-foreground">No completed tasks</p>
+                </ScrollArea>
+              </TabsContent>
+              
+              <TabsContent value="overdue" className="mt-0">
+                <ScrollArea className="h-full">
+                  <div className="divide-y">
+                    {overdueTasks.length > 0 ? (
+                      overdueTasks.map((task) => (
+                        <TaskItem key={task.id} task={task} />
+                      ))
+                    ) : (
+                      <div className="py-8 text-center">
+                        <p className="text-muted-foreground">No overdue tasks</p>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="overdue" className="mt-0">
-              <div className="divide-y">
-                {overdueTasks.length > 0 ? (
-                  overdueTasks.map((task) => (
-                    <TaskItem key={task.id} task={task} />
-                  ))
-                ) : (
-                  <div className="py-8 text-center">
-                    <p className="text-muted-foreground">No overdue tasks</p>
-                  </div>
-                )}
-              </div>
-            </TabsContent>
+                </ScrollArea>
+              </TabsContent>
+            </ScrollArea>
           </Card>
         </Tabs>
       </div>
 
-      {/* AI Task Generator Dialog */}
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>

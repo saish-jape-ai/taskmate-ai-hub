@@ -1,5 +1,6 @@
+
 import AppLayout from "@/components/AppLayout";
-import { Users, Plus, Search, MessageSquare, Eye, ArrowLeft } from "lucide-react";
+import { Users, Plus, Search, MessageSquare, Eye, Edit, Trash2 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { users } from "@/data/mockData";
 import { useState } from "react";
@@ -9,20 +10,31 @@ import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger,
+  DropdownMenuLabel,
+  DropdownMenuSeparator
+} from "@/components/ui/dropdown-menu";
 
 const TeamMembers = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedMember, setSelectedMember] = useState(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
-  if (currentUser?.role === 'employee') {
+  if (currentUser?.role !== 'team_leader') {
     return (
       <AppLayout title="Team Members">
         <div className="max-w-4xl mx-auto text-center py-12">
           <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
           <h2 className="text-2xl font-bold mb-2">Access Restricted</h2>
           <p className="text-muted-foreground">
-            Only team leaders and administrators can manage team members.
+            Only team leaders can manage team members.
           </p>
         </div>
       </AppLayout>
@@ -43,12 +55,25 @@ const TeamMembers = () => {
     navigate("/add-team-member");
   };
 
-  const handleViewProfile = (memberId: string) => {
-    navigate(`/member-profile/${memberId}`);
+  const handleEditMember = (memberId) => {
+    navigate(`/edit-team-member/${memberId}`);
   };
 
-  const handleChatWithMember = (memberId: string) => {
-    navigate(`/chat/${memberId}`);
+  const handleDeleteMember = () => {
+    if (selectedMember) {
+      // Simulating member deletion
+      toast({
+        title: "Member Removed",
+        description: `${selectedMember.name} has been removed from the team.`
+      });
+      setIsDeleteDialogOpen(false);
+      setSelectedMember(null);
+    }
+  };
+
+  const confirmDeleteMember = (member) => {
+    setSelectedMember(member);
+    setIsDeleteDialogOpen(true);
   };
 
   return (
@@ -77,7 +102,7 @@ const TeamMembers = () => {
           </div>
         </div>
 
-        <div className="grid gap-5">
+        <div className="grid gap-5 max-h-[600px] overflow-y-auto pr-2">
           {filteredMembers.map((member) => (
             <Card key={member.id} className="p-4 bg-white dark:bg-card hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between">
@@ -100,24 +125,32 @@ const TeamMembers = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => handleChatWithMember(member.id)}
-                    className="border-taskmate-purple/40 hover:bg-taskmate-purple/10"
-                  >
-                    <MessageSquare className="h-4 w-4 mr-2 text-taskmate-purple" />
-                    Chat
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => handleViewProfile(member.id)}
-                    className="border-taskmate-purple/40 hover:bg-taskmate-purple/10"
-                  >
-                    <Eye className="h-4 w-4 mr-2 text-taskmate-purple" />
-                    View Profile
-                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon">
+                        <Plus className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuLabel>Member Actions</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onSelect={() => navigate(`/chat/${member.id}`)}>
+                        <MessageSquare className="mr-2 h-4 w-4" />
+                        Message
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onSelect={() => handleEditMember(member.id)}>
+                        <Edit className="mr-2 h-4 w-4" />
+                        Edit
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onSelect={() => confirmDeleteMember(member)}
+                        className="text-destructive focus:text-destructive"
+                      >
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Remove
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               </div>
             </Card>
@@ -130,8 +163,29 @@ const TeamMembers = () => {
           )}
         </div>
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Remove Team Member</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to remove {selectedMember?.name} from the team?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={handleDeleteMember}>
+              Remove
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 };
 
 export default TeamMembers;
+
