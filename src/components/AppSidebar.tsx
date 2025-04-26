@@ -36,8 +36,7 @@ export function AppSidebar() {
     { title: "Tasks", url: "/tasks", icon: List },
     { title: "Chat", url: "/chat", icon: MessageSquare },
     { title: "Calendar", url: "/calendar", icon: CalendarDays },
-    { title: "Analytics", url: "/analytics", icon: Grid2x2 },
-    { title: "Projects", url: "/projects", icon: FileText }
+    { title: "Analytics", url: "/analytics", icon: Grid2x2 }
   ];
 
   // Role-specific items - Remove Team Leader option from sidebar as requested

@@ -23,7 +23,6 @@ import Reminders from "./pages/Reminders";
 import AiChat from "./pages/AiChat";
 import CreateTeam from "./pages/CreateTeam";
 import Calendar from "./pages/Calendar";
-import Projects from "./pages/Projects";  // Add this import
 
 const queryClient = new QueryClient();
 
@@ -52,7 +51,6 @@ const App = () => (
             <Route path="/ai-chat" element={<AiChat />} />
             <Route path="/create-team" element={<CreateTeam />} />
             <Route path="/calendar" element={<Calendar />} />
-            <Route path="/projects" element={<Projects />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
