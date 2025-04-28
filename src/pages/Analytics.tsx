@@ -63,7 +63,7 @@ const Analytics = () => {
                     <h3 className="font-medium">Top Performance Insight</h3>
                   </div>
                   <p className="text-sm">
-                    Customer Support team is showing exceptional growth with a 
+                    Customer Python FastAPI is showing exceptional growth with a 
                     <Badge className="ml-1 bg-green-100 text-green-800 hover:bg-green-100">+18%</Badge> 
                     improvement in task completion rates and response times.
                   </p>
@@ -75,7 +75,7 @@ const Analytics = () => {
                     <h3 className="font-medium">Area for Improvement</h3>
                   </div>
                   <p className="text-sm">
-                    Sales team is experiencing a 
+                    Python AI is experiencing a 
                     <Badge className="mx-1 bg-orange-100 text-orange-800 hover:bg-orange-100">-3%</Badge> 
                     decline in performance. Analysis suggests focusing on improving collaboration and task distribution.
                   </p>
@@ -114,10 +114,10 @@ const Analytics = () => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="team1" name="Product Development" stroke="#9b87f5" />
-                    <Line type="monotone" dataKey="team2" name="Marketing" stroke="#D3E4FD" />
-                    <Line type="monotone" dataKey="team3" name="Customer Support" stroke="#F2FCE2" />
-                    <Line type="monotone" dataKey="team4" name="Sales" stroke="#FEC6A1" />
+                    <Line type="monotone" dataKey="team1" name="PYTHON_FASTAPI" stroke="#9b87f5" />
+                    <Line type="monotone" dataKey="team2" name="PYTHON_AI" stroke="#D3E4FD" />
+                    <Line type="monotone" dataKey="team3" name="PYTHOM_ML" stroke="#F2FCE2" />
+                    <Line type="monotone" dataKey="team4" name="REACT" stroke="#FEC6A1" />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -141,7 +141,7 @@ const Analytics = () => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="efficiency" name="Efficiency" fill="#9b87f5" />
+                    <Bar dataKey="efficiency" name="Efficiency" fill="#f4d03f" />
                     <Bar dataKey="qualityScore" name="Quality Score" fill="#D3E4FD" />
                   </BarChart>
                 </ResponsiveContainer>

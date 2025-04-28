@@ -4,82 +4,163 @@ import { User, Team, Task, Notification, PerformanceMetric, Conversation, Messag
 export const teams: Team[] = [
   {
     id: 'team1',
-    name: 'Product Development',
-    leaderId: '2',
-    members: ['2', '3', '4', '5'],
-    performanceScore: 85,
-    growth: 12
+    name: 'PYTHON_FASTAPI ',
+    leaderId: '1',
+    members: ['1', '2', '3', '4', '5'],
+    performanceScore: 91,
+    growth: 18
   },
   {
     id: 'team2',
-    name: 'Marketing',
-    leaderId: '6',
-    members: ['6', '7', '8'],
-    performanceScore: 78,
+    name: 'PYTHON_AI',
+    leaderId: '8',
+    members: ['6', '7', '8', '9', '10'],
+    performanceScore: 87,
     growth: 5
   },
   {
     id: 'team3',
-    name: 'Customer Support',
-    leaderId: '9',
-    members: ['9', '10', '11', '12'],
-    performanceScore: 92,
-    growth: 18
+    name: 'PYTHON_ML',
+    leaderId: '11',
+    members: ['13', '14', '15', '11', '12'],
+    performanceScore: 83,
+    growth: 12
   },
   {
     id: 'team4',
-    name: 'Sales',
-    leaderId: '13',
-    members: ['13', '14', '15'],
-    performanceScore: 67,
-    growth: -3
+    name: 'REACT',
+    leaderId: '16',
+    members: ['16', '17', '18', '19', '20'],
+    performanceScore: 86,
+    growth: 9
   }
 ];
 
 // Additional mock users (beyond the ones in AuthContext)
 export const users: User[] = [
+
+  // TEAM 1
+  {
+    id: '1',
+    name: 'Ajinkya Wagh',
+    email: 'ajinkya.baapcompany@gmail.com',
+    role: 'team_leader',
+    teamId: 'team1',
+    avatar: 'C:\Users\CRESCENT INFOTECH\Desktop\EOD\version2\taskmate-ai-hub\assets\avatars\man.png.avif',
+  },
+
+  {
+    id: '2',
+    name: 'Saish Jape',
+    email: 'saishjape.baapcom.com',
+    role: 'employee',
+    teamId: 'team1',
+    avatar: '/assets/avatars/priya.png',
+  },
+  {
+    id: '3',
+    name: 'Jagdish Pagar',
+    email: 'jagdishpagar875@gmail.com',
+    role: 'employee',
+    teamId: 'team1',
+    avatar: '/assets/avatars/amit.png',
+  },
   {
     id: '4',
-    name: 'Alex Johnson',
-    email: 'alex@bloomteam.com',
+    name: 'Sahil Wable',
+    email: 'sahil.wable29@baapcompany.com',
     role: 'employee',
     teamId: 'team1',
-    avatar: '/assets/avatars/alex.png',
+    avatar: '/assets/avatars/sneha.png',
   },
+
   {
     id: '5',
-    name: 'Sarah Williams',
-    email: 'sarah@bloomteam.com',
+    name: 'Pranav Bodke',
+    email: 'pranavb.fastapiteam.com',
     role: 'employee',
     teamId: 'team1',
-    avatar: '/assets/avatars/sarah.png',
-  },
-  {
-    id: '6',
-    name: 'Michael Brown',
-    email: 'michael@bloomteam.com',
-    role: 'team_leader',
-    teamId: 'team2',
-    avatar: '/assets/avatars/michael.png',
-  },
-  {
-    id: '7',
-    name: 'Emily Davis',
-    email: 'emily@bloomteam.com',
-    role: 'employee',
-    teamId: 'team2',
-    avatar: '/assets/avatars/emily.png',
+    avatar: '/assets/avatars/priya.png',
   },
   {
     id: '8',
-    name: 'James Wilson',
-    email: 'james@bloomteam.com',
+    name: 'Rahul Wale',
+    email: 'rahulw.aiml@gmail.com',
     role: 'employee',
     teamId: 'team2',
-    avatar: '/assets/avatars/james.png',
+    avatar: '/assets/avatars/alex.png',
+  },
+  {
+    id: '10',
+    name: 'Meera Nair',
+    email: 'meera.nair@bloomteam.com',
+    role: 'employee',
+    teamId: 'team3',
+    avatar: '/assets/avatars/meera.png',
+  },
+  {
+    id: '7',
+    name: 'Rohit Kapoor',
+    email: 'rohit.kapoor@bloomteam.com',
+    role: 'employee',
+    teamId: 'team2',
+    avatar: '/assets/avatars/rohit.png',
+  },
+  {
+    id: '6',
+    name: 'Anjali Rao',
+    email: 'anjali.rao@bloomteam.com',
+    role: 'employee',
+    teamId: 'team2',
+    avatar: '/assets/avatars/anjali.png',
   },
   {
     id: '9',
+    name: 'Vikas Mehta',
+    email: 'vikas.mehta@bloomteam.com',
+    role: 'employee',
+    teamId: 'team2',
+    avatar: '/assets/avatars/vikas.png',
+  },
+
+
+
+
+
+  {
+    id: '11',
+    name: 'Ravi Takle',
+    email: 'ravi.baapmlteam.com',
+    role: 'employee',
+    teamId: 'team3',
+    avatar: '/assets/avatars/sarah.png',
+  },
+  {
+    id: '12',
+    name: 'Michael Brown',
+    email: 'michael@bloomteam.com',
+    role: 'team_leader',
+    teamId: 'team3',
+    avatar: '/assets/avatars/michael.png',
+  },
+  {
+    id: '13',
+    name: 'Emily Davis',
+    email: 'emily@bloomteam.com',
+    role: 'employee',
+    teamId: 'team3',
+    avatar: '/assets/avatars/emily.png',
+  },
+  {
+    id: '14',
+    name: 'James Wilson',
+    email: 'james@bloomteam.com',
+    role: 'employee',
+    teamId: 'team3',
+    avatar: '/assets/avatars/james.png',
+  },
+  {
+    id: '15',
     name: 'Jessica Miller',
     email: 'jessica@bloomteam.com',
     role: 'team_leader',
@@ -87,13 +168,46 @@ export const users: User[] = [
     avatar: '/assets/avatars/jessica.png',
   },
   {
-    id: '10',
-    name: 'David Moore',
-    email: 'david@bloomteam.com',
+    id: '16',
+    name: 'Ketan Abhang',
+    email: 'ketan.abhang887@gmail.com',
     role: 'employee',
-    teamId: 'team3',
+    teamId: 'team4',
     avatar: '/assets/avatars/david.png',
-  }
+  },
+  {
+    id: '17',
+    name: 'Neha Singh',
+    email: 'neha.singh@bloomteam.com',
+    role: 'team_leader',
+    teamId: 'team4',
+    avatar: '/assets/avatars/neha.png',
+  },
+  {
+    id: '18',
+    name: 'Arjun Das',
+    email: 'arjun.das@bloomteam.com',
+    role: 'employee',
+    teamId: 'team4',
+    avatar: '/assets/avatars/arjun.png',
+  },
+  {
+    id: '19',
+    name: 'Pooja Thakur',
+    email: 'pooja.thakur@bloomteam.com',
+    role: 'employee',
+    teamId: 'team4',
+    avatar: '/assets/avatars/pooja.png',
+  },
+  {
+    id: '20',
+    name: 'Sahil Khan',
+    email: 'sahil.khan@bloomteam.com',
+    role: 'employee',
+    teamId: 'team4',
+    avatar: '/assets/avatars/sahil.png',
+  },
+
 ];
 
 // Mock tasks

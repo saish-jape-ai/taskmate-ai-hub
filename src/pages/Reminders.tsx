@@ -30,9 +30,9 @@ import { format } from 'date-fns';
 
 // Mock users data for the dropdown
 const mockUsers = [
-  { id: "1", name: "John Doe", email: "john@example.com" },
-  { id: "2", name: "Jane Smith", email: "jane@example.com" },
-  { id: "3", name: "Alex Johnson", email: "alex@example.com" },
+  { id: "1", name: "Sahil Wable", email: "sahil.wable@gmail.com" },
+  { id: "2", name: "Jagdish Pagar", email: "jagdish.pagar@gmail.com" },
+  { id: "3", name: "Saish Jape", email: "saish.jape@gmail.com" },
 ];
 
 const ReminderForm = ({ onClose }: { onClose: () => void }) => {

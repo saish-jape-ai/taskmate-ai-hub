@@ -75,21 +75,6 @@ const Login = () => {
               </div>
             </form>
           </CardContent>
-          <CardFooter className="flex flex-col">
-            <div className="mt-4 text-center text-sm text-muted-foreground">
-              <p>Demo Accounts:</p>
-              <p className="mt-1">
-                <span className="font-semibold">Super Admin:</span> admin@taskmate.com
-              </p>
-              <p className="mt-1">
-                <span className="font-semibold">Team Leader:</span> leader@taskmate.com
-              </p>
-              <p className="mt-1">
-                <span className="font-semibold">Employee:</span> employee@taskmate.com
-              </p>
-              <p className="mt-1 text-muted-foreground">(Use any password)</p>
-            </div>
-          </CardFooter>
         </Card>
       </div>
     </div>

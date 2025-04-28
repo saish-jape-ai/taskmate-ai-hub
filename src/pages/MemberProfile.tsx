@@ -68,7 +68,7 @@ const MemberProfile = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <Phone className="h-4 w-4 text-taskmate-purple" />
-                  <span className="text-sm">+1 (555) 123-4567</span>
+                  <span className="text-sm">6743492456</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Calendar className="h-4 w-4 text-taskmate-purple" />
@@ -193,8 +193,8 @@ const MemberProfile = () => {
                   <h3 className="text-lg font-semibold mb-4">Skills & Expertise</h3>
                   
                   <div className="flex flex-wrap gap-2 mb-6">
+                    <span className="px-3 py-1 bg-taskmate-purple/10 text-taskmate-purple rounded-full text-sm">Python</span>
                     <span className="px-3 py-1 bg-taskmate-purple/10 text-taskmate-purple rounded-full text-sm">React</span>
-                    <span className="px-3 py-1 bg-taskmate-purple/10 text-taskmate-purple rounded-full text-sm">TypeScript</span>
                     <span className="px-3 py-1 bg-taskmate-purple/10 text-taskmate-purple rounded-full text-sm">Node.js</span>
                     <span className="px-3 py-1 bg-taskmate-purple/10 text-taskmate-purple rounded-full text-sm">UI/UX Design</span>
                     <span className="px-3 py-1 bg-taskmate-purple/10 text-taskmate-purple rounded-full text-sm">API Development</span>
@@ -203,16 +203,16 @@ const MemberProfile = () => {
                   <h3 className="text-lg font-semibold mb-4">Recent Projects</h3>
                   <div className="space-y-4">
                     <div className="p-3 border rounded-lg">
-                      <h4 className="font-medium">TaskMate Mobile App</h4>
+                      <h4 className="font-medium">Simplify VMS</h4>
                       <p className="text-sm text-muted-foreground mt-1">
-                        Worked on developing the mobile version of TaskMate using React Native
+                        Worked on developing the API's using FastAPI and adding Artifical Intelligence.
                       </p>
                     </div>
                     
                     <div className="p-3 border rounded-lg">
-                      <h4 className="font-medium">Analytics Dashboard</h4>
+                      <h4 className="font-medium">Hire_HQ</h4>
                       <p className="text-sm text-muted-foreground mt-1">
-                        Built interactive charts and data visualization tools for the analytics section
+                      Worked on developing the API's using Node Js.
                       </p>
                     </div>
                   </div>
