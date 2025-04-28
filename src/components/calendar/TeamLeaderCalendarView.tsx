@@ -26,9 +26,9 @@ export const TeamLeaderCalendarView = ({ view }: TeamLeaderCalendarViewProps) =>
 
   // Mock data for the filters
   const teamMembers = [
-    { id: "emp1", name: "John Doe" },
-    { id: "emp2", name: "Jane Smith" },
-    { id: "emp3", name: "Robert Johnson" },
+    { id: "emp1", name: "Saish Jape" },
+    { id: "emp2", name: "Jagdish Pagar" },
+    { id: "emp3", name: "Sahil Wable" },
   ];
 
   const priorities = [
@@ -42,7 +42,7 @@ export const TeamLeaderCalendarView = ({ view }: TeamLeaderCalendarViewProps) =>
     { 
       id: 1, 
       title: "Complete project proposal", 
-      assignee: "John Doe", 
+      assignee: "Saish Jape", 
       status: "pending",
       dueDate: "2025-05-02",
       priority: "high"
@@ -50,7 +50,7 @@ export const TeamLeaderCalendarView = ({ view }: TeamLeaderCalendarViewProps) =>
     { 
       id: 2, 
       title: "Review design mockups", 
-      assignee: "Jane Smith",
+      assignee: "Jagdish Pagar",
       status: "in_progress",
       dueDate: "2025-05-03",
       priority: "medium"
@@ -58,7 +58,7 @@ export const TeamLeaderCalendarView = ({ view }: TeamLeaderCalendarViewProps) =>
     { 
       id: 3, 
       title: "Deploy backend updates", 
-      assignee: "Robert Johnson",
+      assignee: "Sahil Wable",
       status: "completed",
       dueDate: "2025-05-01",
       priority: "low"

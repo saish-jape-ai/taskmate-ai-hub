@@ -25,9 +25,10 @@ export const SuperAdminCalendarView = ({ view }: SuperAdminCalendarViewProps) =>
 
   // Mock data for the filters
   const teams = [
-    { id: "team1", name: "Development Team" },
-    { id: "team2", name: "Marketing Team" },
-    { id: "team3", name: "Design Team" },
+    { id: "team1", name: "PYTHON_FASTAPI" },
+    { id: "team2", name: "PYTHON_AI" },
+    { id: "team3", name: "PYTHON_ML" },
+    { id: "team4", name: "REACT" },
   ];
 
   const statuses = [
@@ -38,9 +39,9 @@ export const SuperAdminCalendarView = ({ view }: SuperAdminCalendarViewProps) =>
   ];
 
   const employees = [
-    { id: "emp1", name: "John Doe" },
-    { id: "emp2", name: "Jane Smith" },
-    { id: "emp3", name: "Robert Johnson" },
+    { id: "emp1", name: "Saish Jape" },
+    { id: "emp2", name: "Jagdish Pagar" },
+    { id: "emp3", name: "Sahil Wable" },
   ];
 
   // AI bottlenecks prediction
@@ -96,7 +97,7 @@ export const SuperAdminCalendarView = ({ view }: SuperAdminCalendarViewProps) =>
                 <SelectValue placeholder="Select Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Statuses</SelectItem>
+                <SelectItem value="all">All Status</SelectItem>
                 {statuses.map((status) => (
                   <SelectItem key={status.id} value={status.id}>
                     {status.name}
