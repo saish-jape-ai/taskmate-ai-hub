@@ -92,7 +92,7 @@ export const users: User[] = [
   },
   {
     id: '10',
-    name: 'Meera Nair',
+    name: 'Rushikesh Patil',
     email: 'meera.nair@bloomteam.com',
     role: 'employee',
     teamId: 'team3',
