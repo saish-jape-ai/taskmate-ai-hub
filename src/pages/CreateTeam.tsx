@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { Check, Users, ArrowLeft } from "lucide-react";
+import { Check, Users, ArrowLeft, Eye, EyeOff } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -27,6 +27,8 @@ const CreateTeam = () => {
   const [selectedLeader, setSelectedLeader] = useState("");
   const [technologies, setTechnologies] = useState("");
   const [description, setDescription] = useState("");
+  const [leaderPassword, setLeaderPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   
   // Filter users with role team_leader
   const availableLeaders = users.filter(user => user.role === "team_leader");
@@ -34,7 +36,7 @@ const CreateTeam = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!teamName.trim() || !selectedLeader) {
+    if (!teamName.trim() || !selectedLeader || !leaderPassword) {
       toast({
         title: "Missing information",
         description: "Please fill in all required fields",
@@ -116,6 +118,32 @@ const CreateTeam = () => {
                       ))}
                     </SelectContent>
                   </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="leader-password">Team Leader Password <span className="text-red-500">*</span></Label>
+                  <div className="relative mt-1">
+                    <Input
+                      id="leader-password"
+                      type={showPassword ? "text" : "password"}
+                      value={leaderPassword}
+                      onChange={(e) => setLeaderPassword(e.target.value)}
+                      placeholder="Enter password for team leader"
+                      required
+                      className="pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2"
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4 text-gray-500" />
+                      ) : (
+                        <Eye className="h-4 w-4 text-gray-500" />
+                      )}
+                    </button>
+                  </div>
                 </div>
                 
                 <div>

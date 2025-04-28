@@ -72,6 +72,17 @@ const Login = () => {
                 <Button type="submit" className="w-full bg-primary hover:bg-bloom-purple/90" disabled={isLoading}>
                   {isLoading ? "Signing in..." : "Sign In"}
                 </Button>
+
+                <div className="text-center text-sm">
+                  <span className="text-gray-600">Need a super admin account? </span>
+                  <Button 
+                    variant="link" 
+                    className="p-0 h-auto" 
+                    onClick={() => navigate('/signup')}
+                  >
+                    Sign Up
+                  </Button>
+                </div>
               </div>
             </form>
           </CardContent>
