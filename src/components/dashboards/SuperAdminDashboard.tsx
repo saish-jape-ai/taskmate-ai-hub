@@ -20,7 +20,7 @@ import { useState } from 'react';
 
 const SuperAdminDashboard = () => {
   const navigate = useNavigate();
-  const [subscriptionPlan, setSubscriptionPlan] = useState('free');
+  // const [subscriptionPlan, setSubscriptionPlan] = useState('free');
   // Calculate total tasks
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter(task => task.status === 'completed').length;
@@ -64,7 +64,7 @@ const SuperAdminDashboard = () => {
   return (
     <div className="space-y-6">
 
-      <Card className={`border-l-4 ${subscriptionPlan === 'premium' ? 'border-l-green-500' : 'border-l-amber-500'}`}>
+      {/* <Card className={`border-l-4 ${subscriptionPlan === 'premium' ? 'border-l-green-500' : 'border-l-amber-500'}`}>
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-xl">
@@ -125,7 +125,7 @@ const SuperAdminDashboard = () => {
             </div>
           )}
         </CardContent>
-      </Card>
+      </Card> */}
 
       {/* Admin dashboard header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
