@@ -38,8 +38,8 @@ const Index = () => {
     },
     {
       name: 'Premium',
-      price: 29,
-      yearlyPrice: 290, // Save ~$58
+      price: 49.00,
+      yearlyPrice: 499.00, // Save ~$58
       description: 'Everything you need for growing teams',
       features: [
         'Task management',
@@ -50,7 +50,7 @@ const Index = () => {
         'Full team chat access',
         'Personal AI assistant',
         'Priority support',
-        'Future voice/video calling',
+        'Future voice/video/group calling',
         'Unlimited team members',
       ],
       cta: 'Subscribe Now',
@@ -64,7 +64,7 @@ const Index = () => {
       <header className="fixed top-0 left-0 right-0 bg-white/90 dark:bg-gray-900/90 shadow-sm backdrop-blur-sm z-10 border-b border-gray-200 dark:border-gray-800">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <AreaChart className="h-8 w-8 text-taskmate-purple" />
+          <img src="taskmate.png" alt="" className='h-7, w-7'/>
             <span className="text-2xl font-bold">TaskMate</span>
           </div>
           <div className="flex items-center gap-4">
@@ -189,12 +189,12 @@ const Index = () => {
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-2xl font-bold">{plan.name}</h3>
                   <div className="mt-4 flex items-baseline">
-                    <span className="text-4xl font-extrabold">${plan.price}</span>
+                    <span className="text-4xl font-extrabold">₹{plan.price}</span>
                     {plan.price > 0 && <span className="ml-1 text-lg text-gray-500">/month</span>}
                   </div>
                   {plan.yearlyPrice && (
                     <div className="mt-1 text-sm text-gray-500">
-                      or ${plan.yearlyPrice}/year (save 16%)
+                      or ₹{plan.yearlyPrice}/year (save 15%)
                     </div>
                   )}
                   <p className="mt-4 text-gray-600 dark:text-gray-300">{plan.description}</p>
@@ -461,7 +461,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <AreaChart className="h-6 w-6 text-taskmate-purple" />
+              <img src="taskmate.png" alt="" className='h-6, w-6'/>
                 <span className="text-xl font-bold">TaskMate</span>
               </div>
               <p className="text-muted-foreground text-sm">
