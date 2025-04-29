@@ -86,3 +86,33 @@ export interface AIAssistantConversation {
   userId: string;
   messages: AIAssistantMessage[];
 }
+
+// New subscription-related types
+export type SubscriptionTier = 'free' | 'premium';
+
+export type BillingCycle = 'monthly' | 'yearly';
+
+export interface Subscription {
+  userId: string;
+  tier: SubscriptionTier;
+  isActive: boolean;
+  billingCycle: BillingCycle;
+  startDate: string;
+  endDate: string;
+  autoRenew: boolean;
+  paymentMethod?: {
+    type: 'card';
+    lastFour: string;
+    expiryMonth: number;
+    expiryYear: number;
+    brand: string;
+  };
+}
+
+export interface PremiumFeature {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  requiredTier: SubscriptionTier;
+}
