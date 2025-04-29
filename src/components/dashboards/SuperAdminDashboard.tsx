@@ -7,7 +7,7 @@ import {
   PieChart, CheckCircle2, AlertCircle, Clock,
   Star,
   CreditCard,
-  DollarSign
+  IndianRupee
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -120,7 +120,7 @@ const SuperAdminDashboard = () => {
                 className="bg-taskmate-purple hover:bg-taskmate-purple/90"
                 onClick={() => navigate('/settings')}
               >
-                <DollarSign className="h-4 w-4 mr-2" /> Upgrade Now
+                <IndianRupee  className="h-4 w-4 mr-2" /> Upgrade Now
               </Button>
             </div>
           )}

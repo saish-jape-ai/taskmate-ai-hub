@@ -185,14 +185,14 @@ const Reminders = () => {
     {
       id: 1,
       title: 'Submit EOD Report',
-      recipient: 'John Doe',
+      recipient: 'Pranav bodake',
       status: 'sent',
       timestamp: new Date().toISOString(),
     },
     {
       id: 2,
       title: 'Weekly Update',
-      recipient: 'Sarah Smith',
+      recipient: 'Aditya jape',
       status: 'scheduled',
       timestamp: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
     },
