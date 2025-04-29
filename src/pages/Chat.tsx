@@ -193,7 +193,7 @@ const Chat = () => {
                         className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'}`}
                       >
                         <div className={`
-                          flex items-start gap-2 max-w-[70%]
+                          flex items-start gap-2 max-w-[70%] 
                           ${isCurrentUser ? 'flex-row-reverse' : ''}
                         `}>
                           <Avatar className="h-6 w-6">
@@ -209,7 +209,7 @@ const Chat = () => {
                             <div className={`
                               py-2 px-3 rounded-xl text-sm
                               ${isCurrentUser 
-                                ? 'bg-bloom-purple text-white rounded-tr-none' 
+                                ? 'bg-bloom-purple text-primary rounded-tr-none' 
                                 : 'bg-muted rounded-tl-none'
                               }
                             `}>
