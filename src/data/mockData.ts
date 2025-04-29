@@ -40,14 +40,14 @@ export const teams: Team[] = [
 export const users: User[] = [
 
   // TEAM 1
-  {
-    id: '1',
-    name: 'Ajinkya Wagh',
-    email: 'ajinkya.baapcompany@gmail.com',
-    role: 'team_leader',
-    teamId: 'team1',
-    avatar: 'C:\Users\CRESCENT INFOTECH\Desktop\EOD\version2\taskmate-ai-hub\assets\avatars\man.png.avif',
-  },
+  // {
+  //   id: '1',
+  //   name: 'Ajinkya Wagh',
+  //   email: 'ajinkya.baapcompany@gmail.com',
+  //   role: 'team_leader',
+  //   teamId: 'team1',
+  //   avatar: 'C:\Users\CRESCENT INFOTECH\Desktop\EOD\version2\taskmate-ai-hub\assets\avatars\man.png.avif',
+  // },
 
   {
     id: '2',
@@ -269,12 +269,54 @@ export const tasks: Task[] = [
     description: 'Develop content calendar for the next month covering blog posts, social media, and email campaigns.',
     status: 'overdue',
     priority: 'high',
-    assigneeId: '7',
-    assignerId: '6',
+    assigneeId: '3',
+    assignerId: '2',
     teamId: 'team2',
     dueDate: '2025-04-10',
     aiGenerated: false
-  }
+  },
+  // New tasks for Sahil Wable (id: '4')
+{
+  id: 'task6',
+  title: 'Optimize API Performance',
+  description: 'Analyze and improve the performance of existing FastAPI endpoints by reducing response times.',
+  status: 'in_progress',
+  priority: 'high',
+  assigneeId: '4',
+  assignerId: '1',
+  teamId: 'team1',
+  dueDate: '2025-05-05',
+  aiGenerated: true,
+  aiExplanation: 'This task aims to enhance the performance of the FastAPI backend by profiling slow endpoints, implementing caching, and optimizing queries or logic.'
+},
+{
+  id: 'task7',
+  title: 'Write Unit Tests for User Module',
+  description: 'Add comprehensive unit tests for the User authentication and management module.',
+  status: 'pending',
+  priority: 'medium',
+  assigneeId: '4',
+  assignerId: '2',
+  teamId: 'team1',
+  dueDate: '2025-05-08',
+  aiGenerated: false
+},
+
+// New task for Pranav Bodke (id: '5')
+{
+  id: 'task8',
+  title: 'Create Swagger API Documentation',
+  description: 'Document all backend routes using Swagger for better API visibility.',
+  status: 'pending',
+  priority: 'high',
+  assigneeId: '5',
+  assignerId: '1',
+  teamId: 'team1',
+  dueDate: '2025-05-04',
+  aiGenerated: true,
+  aiExplanation: 'Ensure all FastAPI routes are well-documented using Swagger or OpenAPI. Include request and response models for clarity.'
+}
+
 ];
 
 // Mock notifications
