@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { BarChart, DollarSign, Users, Star, CreditCard } from 'lucide-react';
+import { BarChart, IndianRupee , Users, Star, CreditCard } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const SuperAdminDashboard = () => {
@@ -68,7 +68,7 @@ const SuperAdminDashboard = () => {
                 className="bg-taskmate-purple hover:bg-taskmate-purple/90"
                 onClick={() => navigate('/settings')}
               >
-                <DollarSign className="h-4 w-4 mr-2" /> Upgrade Now
+                <IndianRupee  className="h-4 w-4 mr-2" /> Upgrade Now
               </Button>
             </div>
           )}
