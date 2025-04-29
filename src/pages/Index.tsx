@@ -38,8 +38,8 @@ const Index = () => {
     },
     {
       name: 'Premium',
-      price: 49.00,
-      yearlyPrice: 499.00, // Save ~$58
+      price: 499.00,
+      yearlyPrice: 4999.00, // Save ~$58
       description: 'Everything you need for growing teams',
       features: [
         'Task management',
